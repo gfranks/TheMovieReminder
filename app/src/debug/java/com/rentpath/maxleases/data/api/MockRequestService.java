@@ -100,7 +100,6 @@ public class MockRequestService implements RequestService {
     @Override
     public void getGameTrailers(@Path("apiKey") String apiKey, Callback<ArrayList<Game>> cb) {
         ArrayList<Game> games = new ArrayList<Game>();
-
         games.add(new Game("Grand Theft Auto V",
                 "Rockstar Games' critically acclaimed open world comes to a new generation \n\nEnter the lives of three " +
                         "very different criminals, Michael, Franklin and Trevor, as they risk everything in a series of daring " +
@@ -110,7 +109,7 @@ public class MockRequestService implements RequestService {
                 "http://upload.wikimedia.org/wikipedia/en/a/a5/Grand_Theft_Auto_V.png",
                 "https://www.youtube.com/watch?v=hBvMSP7cI-Q",
                 new Date(new Date().getTime() - 60000),
-                Game.Console.PS4,
+                Game.Console.ALL,
                 "Rockstar Games"));
         games.add(new Game("Destiny",
                 "Everything changed with the arrival of the Traveler. It sparked a Golden Age when our civilization spanned our solar " +
@@ -121,7 +120,7 @@ public class MockRequestService implements RequestService {
                 "http://www.sggaminginfo.com/wp-content/uploads/2013/09/Destiny-PS4-Pre-Order-Inlay-2D-UK_1380551641.jpg",
                 "https://www.youtube.com/watch?v=iMGE3B2wsS8",
                 new Date(new Date().getTime() + (60000 * 2)),
-                Game.Console.PS4,
+                Game.Console.ALL,
                 "Activision/Bungie"));
         games.add(new Game("Far Cry 4",
                 "Hidden in the towering Himalayas lies Kyrat, a country steeped in tradition and violence. You are Ajay Ghale. " +
@@ -132,7 +131,7 @@ public class MockRequestService implements RequestService {
                 "http://tech4gamers.com/wp-content/uploads/2014/05/far-cry-4.jpg",
                 "https://www.youtube.com/watch?v=e9al_k8e93I",
                 new Date(new Date().getTime() + (60000 * 3)),
-                Game.Console.PS4,
+                Game.Console.ALL,
                 "UbiSoft"));
         games.add(new Game("Dragon Age Inquisition",
                 "The epic role-playing series from BioWare takes a thrilling leap forward with the power of Frostbite 3. Beautiful vistas " +
@@ -140,7 +139,7 @@ public class MockRequestService implements RequestService {
                 "http://upload.wikimedia.org/wikipedia/en/c/ce/Dragon_Age_Inquisition_BoxArt.jpg",
                 "https://www.youtube.com/watch?v=7UpfW_2v64M",
                 new Date(new Date().getTime() + (60000 * 4)),
-                Game.Console.XBOX_ONE,
+                Game.Console.PLAYSTATION_XBOX,
                 "Electronic Arts"));
         games.add(new Game("Mortal Kombat X",
                 "Fueled by next-gen technology, Mortal Kombat X combines unparalleled, cinematic presentation with all new gameplay to " +
@@ -151,7 +150,7 @@ public class MockRequestService implements RequestService {
                 "http://upload.wikimedia.org/wikipedia/en/d/d0/Mortal_Kombat_X_Cover_Art.png",
                 "https://www.youtube.com/watch?v=8DhubZRnWw4",
                 new Date(new Date().getTime() + (60000 * 5)),
-                Game.Console.XBOX_360,
+                Game.Console.PLAYSTATION_XBOX,
                 "Warner Home Video Games"));
         games.add(new Game("The Order: 1886",
                 "The Order: 1886 is a deep, story-driven single-player experience that introduces players to a unique alternate history and a" +

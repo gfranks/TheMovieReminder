@@ -129,9 +129,13 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
     protected void checkBackStackEntryOnBackPress() {
         int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
         if (backStackEntryCount <= 1) {
-            this.finish();
+            finish();
         } else {
-            getSupportFragmentManager().popBackStack();
+            if (observeBackStackEntryOnBackPress()) {
+                getSupportFragmentManager().popBackStack();
+            } else {
+                finish();
+            }
         }
     }
 
@@ -176,6 +180,10 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
 
     protected void addNavigationDrawerComponent() {
         getAppContainer().addNavigationDrawerComponent(this, MovieReminderApplication.get(this), this);
+    }
+
+    protected boolean observeBackStackEntryOnBackPress() {
+        return true;
     }
 
     public AppContainer getAppContainer() {

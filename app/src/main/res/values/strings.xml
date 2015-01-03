@@ -39,6 +39,7 @@
     <!-- Menu Action Strings -->
     <string name="action_delete">Delete</string>
     <string name="action_reminders">Remind Me</string>
+    <string name="action_search">Search</string>
 
     <!-- NavigationFragment Strings -->
     <string name="nav_movie_trailer">Movie Trailers</string>

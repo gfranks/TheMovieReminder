@@ -9,6 +9,7 @@ import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,21 @@ public class GameTrailersFragment extends BaseFragment implements Callback<Array
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_trailers, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void success(ArrayList<Game> games, Response response) {
         mPullToRefreshLayout.setRefreshing(false);
         if (mAdapter == null) {
@@ -172,7 +188,7 @@ public class GameTrailersFragment extends BaseFragment implements Callback<Array
 
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mode.getMenuInflater().inflate(R.menu.fragment_trailers, menu);
+        mode.getMenuInflater().inflate(R.menu.fragment_trailers_select, menu);
         getToolbar().setVisibility(View.GONE);
         return true;
     }

@@ -14,6 +14,7 @@ import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.GameReminder;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
+import com.gf.movie.reminder.ui.Fab;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -28,6 +29,10 @@ public class GameTrailerTopDragFragment extends BaseFragment implements View.OnC
     private Game mGame;
     private View mGamePlay;
     private ImageView mGameImage;
+    private Fab mXboxView;
+    private Fab mPlaystationView;
+    private Fab mSteamView;
+    private Fab mPCView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +45,11 @@ public class GameTrailerTopDragFragment extends BaseFragment implements View.OnC
 
         mGamePlay = view.findViewById(R.id.game_play);
         mGameImage = (ImageView) view.findViewById(R.id.game_image_url);
+
+        mXboxView = (Fab) view.findViewById(R.id.game_xbox);
+        mPlaystationView = (Fab) view.findViewById(R.id.game_ps);
+        mSteamView = (Fab) view.findViewById(R.id.game_steam);
+        mPCView = (Fab) view.findViewById(R.id.game_pc);
 
         mGamePlay.setOnClickListener(this);
     }
@@ -68,6 +78,50 @@ public class GameTrailerTopDragFragment extends BaseFragment implements View.OnC
         } else {
             releasedTV.setVisibility(View.GONE);
         }
+
+        mXboxView.setVisibility(View.VISIBLE);
+        switch (mGame.getConsole()) {
+            case XBOX:
+            case XBOX_360:
+            case XBOX_ONE:
+                setConsoleVisibilities(true, false, false, false);
+                break;
+            case XBOX_STEAM:
+                setConsoleVisibilities(true, false, true, false);
+                break;
+            case XBOX_PC:setConsoleVisibilities(true, false, false, true);
+                break;
+            case PLAYSTATION:
+            case PS3:
+            case PS4:
+                setConsoleVisibilities(false, true, false, false);
+                break;
+            case PLAYSTATION_XBOX:
+                setConsoleVisibilities(true, true, false, false);
+                break;
+            case PLAYSTATION_STEAM:
+                setConsoleVisibilities(false, true, true, false);
+                break;
+            case PLAYSTATION_PC:
+                setConsoleVisibilities(false, true, false, true);
+                break;
+            case STEAM:
+                setConsoleVisibilities(false, false, true, false);
+                break;
+            case PC:
+                setConsoleVisibilities(false, false, false, true);
+                break;
+            case ALL:
+                setConsoleVisibilities(true, true, true, true);
+                break;
+        }
+    }
+
+    private void setConsoleVisibilities(boolean xboxVis, boolean psVis, boolean steamVis, boolean pcVis) {
+        mXboxView.setVisibility(xboxVis ? View.VISIBLE : View.GONE);
+        mPlaystationView.setVisibility(psVis ? View.VISIBLE : View.GONE);
+        mSteamView.setVisibility(steamVis ? View.VISIBLE : View.GONE);
+        mPCView.setVisibility(pcVis ? View.VISIBLE : View.GONE);
     }
 
     @Override

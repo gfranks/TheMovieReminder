@@ -125,4 +125,9 @@ public class MovieReminderActivity extends BaseActivity implements NavigationFra
             }
         }
     }
+
+    @Override
+    protected boolean observeBackStackEntryOnBackPress() {
+        return false;
+    }
 }
