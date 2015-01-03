@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.gf.movie.reminder.view.pulltorefresh.PullToRefreshLayout
+        android:id="@+id/trailers_pull_to_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <GridView
+            android:id="@+id/trailers_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:columnWidth="@dimen/trailers_column_width"
+            android:drawSelectorOnTop="true"
+            android:gravity="center"
+            android:horizontalSpacing="5dp"
+            android:numColumns="auto_fit"
+            android:padding="5dp"
+            android:scrollbarStyle="outsideOverlay"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp" />
+
+    </com.gf.movie.reminder.view.pulltorefresh.PullToRefreshLayout>
+
+    <include layout="@layout/layout_adapter_empty" />
+
+</FrameLayout>

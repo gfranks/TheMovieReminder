@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:minHeight="40dp">
+
+    <TextView
+        android:id="@+id/fab_option_text"
+        style="@style/fab_option"
+        android:layout_gravity="start|center_vertical"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:textColor="@color/theme_white" />
+
+    <ImageView
+        android:id="@+id/fab_option_image"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp" />
+
+</FrameLayout>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="light_gray">#FFC2C2C2</color>
+    <color name="tabs_background">@color/theme_gray_light</color>
+    <color name="tab_pressed_light">@color/theme_gray_lighter</color>
+    <color name="translucent_black">#AA000000</color>
+    <color name="translucent_gray_dark">#AA101010</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+
+    <!-- Theme colors -->
+    <color name="theme_accent">@color/theme_red</color>
+    <color name="theme_accent_translucent">@color/theme_red_translucent</color>
+    <color name="theme_accent_dark">@color/theme_red_dark</color>
+    <color name="theme_black">#000000</color>
+    <color name="theme_blue">#4787F3</color>
+    <color name="theme_blue_translucent">#AA4787F3</color>
+    <color name="theme_blue_dark">#3365DF</color>
+    <color name="theme_color_primary">@color/theme_red</color>
+    <color name="theme_color_primary_dark">@color/theme_red_dark</color>
+    <color name="theme_control_highlight">@color/theme_color_primary_dark</color>
+    <color name="theme_cyan">#70D9EB</color>
+    <color name="theme_glass">#88ffffff</color>
+    <color name="theme_gray">#272822</color>
+    <color name="theme_gray_2">#303030</color>
+    <color name="theme_gray_dark">#252525</color>
+    <color name="theme_gray_light">#414141</color>
+    <color name="theme_gray_lighter">#505050</color>
+    <color name="theme_gray_off">#757160</color>
+    <color name="theme_gray_transparent">#DD303030</color>
+    <color name="theme_green">#A8DE4D</color>
+    <color name="theme_magenta">#F33274</color>
+    <color name="theme_magenta_dark">#DD125C</color>
+    <color name="theme_orange">#F99640</color>
+    <color name="theme_red">#D71720</color>
+    <color name="theme_red_translucent">#AAD71720</color>
+    <color name="theme_red_dark">#CA0814</color>
+    <color name="theme_white">#F8F8F2</color>
+
+</resources>

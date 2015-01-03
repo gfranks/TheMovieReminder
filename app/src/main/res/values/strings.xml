@@ -1,0 +1,102 @@
+<resources>
+
+    <string name="app_name">The Movie Reminder</string>
+
+    <string name="google_api_key">AIzaSyDXgi7oB6c-5OVH7u5kW9JoIFz1i6d1zOg</string>
+    <string name="rotten_tomatoes_key">9n5ke6xn9kmkjqq3mqnqqtuq</string>
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="done">Done</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="development_settings">Development Settings</string>
+    <string name="network_information">Network</string>
+    <string name="transition_animation">Transition Animation</string>
+    <string name="logging">Logging</string>
+    <string name="enabled">Enabled</string>
+    <string name="blur_enabled">Blur Enabled</string>
+    <string name="images">Images</string>
+    <string name="drawer_layout">Drawer Layout</string>
+    <string name="image_indicators">Indicators</string>
+    <string name="build_information">Build Information</string>
+    <string name="name">Name</string>
+    <string name="code">Code</string>
+    <string name="sha">SHA</string>
+    <string name="date">Date</string>
+    <string name="information">Information</string>
+    <string name="make">Make</string>
+    <string name="model">Model</string>
+    <string name="resolution">Resolution</string>
+    <string name="density">Density</string>
+    <string name="release">Release</string>
+    <string name="api">API</string>
+
+    <!-- Menu Action Strings -->
+    <string name="action_delete">Delete</string>
+    <string name="action_reminders">Remind Me</string>
+
+    <!-- NavigationFragment Strings -->
+    <string name="nav_trailer">Trailers</string>
+    <string name="nav_reminders">Reminders</string>
+    <string name="nav_login">Log In</string>
+    <string name="nav_logout">Log Out</string>
+    <string name="dev_toggle_dialog_title">Developer Use</string>
+    <string name="dev_toggle_dialog_message">For developer use only.</string>
+    <string name="dev_toggle_dialog_success">Developer Settings Enabled</string>
+
+    <!-- TrailersFragment Strings -->
+    <string name="trailers">Trailers</string>
+    <string name="trailers_empty_text">There are no trailers to display.</string>
+    <string name="trailers_select_movie">Select a movie you wish to be reminded of upon release.</string>
+    <string name="trailers_movie_reminder_set">You will be notified when this movie has been released.</string>
+    <string name="trailers_movie_reminders_set">You will be notified when these movies have been released.</string>
+    <string name="trailers_movie_reminder_removed">You will no longer be notified when this movie is released.</string>
+    <string name="trailers_movie_reminder_already_set">You have already added a reminder for this movie.</string>
+    <string name="trailers_movie_notified">You can now go see %s!</string>
+    <string name="trailers_movie_in_theaters">In Theaters</string>
+    <string name="trailers_movie_on_dvd">On DVD/Blu ray</string>
+    <string name="movie_transition_name">movie_image</string>
+
+    <!-- RemindersFragment Strings -->
+    <string name="reminders">Reminders</string>
+    <string name="reminders_empty_text">You have not set any reminders.</string>
+    <string name="reminders_selected">%d Selected</string>
+    <string name="reminders_delete_title">Delete Reminders?</string>
+    <string name="reminders_delete_message">Are you sure you wish to delete the selected reminders?</string>
+    <string name="reminders_delete_none_selected">Select the reminders you wish to delete.</string>
+
+    <!-- Login Strings -->
+    <string name="login">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="firstname">First name</string>
+    <string name="lastname">Last name</string>
+    <string name="your_email">Your email</string>
+    <string name="password">Password</string>
+    <string name="have_account">Already have an account?</string>
+    <string name="have_account_log_in">Log In now</string>
+    <string name="need_account">Need an account?</string>
+    <string name="need_account_sign_up">Sign up now</string>
+    <string name="login_invalid">Please enter email address and/or password to continue</string>
+    <string name="signup_invalid">Please enter firstname, lastname, email address, and/or password to continue</string>
+
+    <!-- Copyright -->
+    <string name="copyright">Copyright &#169; 2015 Garrett Franks. All rights reserved.</string>
+
+    <!-- MovieTrailerActivity Strings -->
+    <string name="movie_set_reminder">Remind Me!</string>
+    <string name="movie_release_date">Release Date:</string>
+    <string name="movie_directors">Director(s):</string>
+    <string name="movie_stars">Stars:</string>
+
+    <!-- PullToRefreshLayout Colors Array -->
+    <integer-array name="pull_to_refresh_colors">
+        <item>@color/theme_red</item>
+        <item>@color/theme_blue</item>
+        <item>@color/theme_orange</item>
+        <item>@color/theme_green</item>
+    </integer-array>
+
+</resources>
