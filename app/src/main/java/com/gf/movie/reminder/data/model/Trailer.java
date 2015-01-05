@@ -27,6 +27,7 @@ public class Trailer implements Parcelable {
     private String mVideoUrl;
     private Date mReleaseDate;
     private Type mType;
+
     public Trailer() {
     }
 

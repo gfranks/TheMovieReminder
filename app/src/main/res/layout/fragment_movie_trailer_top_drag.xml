@@ -7,8 +7,8 @@
         android:id="@+id/movie_image_url"
         android:layout_width="match_parent"
         android:layout_height="@dimen/trailer_item_image_height"
-        android:scaleType="centerCrop"
-        android:background="@color/theme_gray_2"/>
+        android:background="@color/theme_gray_2"
+        android:scaleType="centerCrop" />
 
     <include layout="@layout/layout_released_view" />
 

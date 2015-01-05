@@ -12,23 +12,6 @@ import java.util.Date;
 
 public class Game extends Trailer {
 
-    public enum Console {
-        XBOX,
-        XBOX_360,
-        XBOX_ONE,
-        XBOX_STEAM,
-        XBOX_PC,
-        PLAYSTATION,
-        PS3,
-        PS4,
-        PLAYSTATION_XBOX,
-        PLAYSTATION_STEAM,
-        PLAYSTATION_PC,
-        STEAM,
-        PC,
-        ALL
-    }
-
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Game createFromParcel(Parcel in) {
             return new Game(in);
@@ -38,10 +21,8 @@ public class Game extends Trailer {
             return new Game[size];
         }
     };
-
     private Console mConsole;
     private String mCompany;
-
     public Game(Parcel in) {
         readFromParcel(in);
     }
@@ -58,6 +39,10 @@ public class Game extends Trailer {
 
     public Console getConsole() {
         return mConsole;
+    }
+
+    public void setConsole(Console console) {
+        mConsole = console;
     }
 
     public String getConsoleName() {
@@ -93,10 +78,6 @@ public class Game extends Trailer {
             default:
                 return "";
         }
-    }
-
-    public void setConsole(Console console) {
-        mConsole = console;
     }
 
     public String getCompany() {
@@ -156,5 +137,22 @@ public class Game extends Trailer {
         }
 
         return null;
+    }
+
+    public enum Console {
+        XBOX,
+        XBOX_360,
+        XBOX_ONE,
+        XBOX_STEAM,
+        XBOX_PC,
+        PLAYSTATION,
+        PS3,
+        PS4,
+        PLAYSTATION_XBOX,
+        PLAYSTATION_STEAM,
+        PLAYSTATION_PC,
+        STEAM,
+        PC,
+        ALL
     }
 }
