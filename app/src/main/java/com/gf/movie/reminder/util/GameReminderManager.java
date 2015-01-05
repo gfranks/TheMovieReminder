@@ -3,30 +3,30 @@ package com.gf.movie.reminder.util;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.gf.movie.reminder.data.model.Movie;
-import com.gf.movie.reminder.data.model.MovieReminder;
+import com.gf.movie.reminder.data.model.Game;
+import com.gf.movie.reminder.data.model.GameReminder;
 import com.gf.movie.reminder.data.model.Reminder;
 import com.gf.movie.reminder.data.model.Trailer;
 
 import java.util.Date;
 
-public class MovieReminderManager extends ReminderManager {
+public class GameReminderManager extends ReminderManager {
 
-    private static MovieReminderManager mInstance;
+    private static GameReminderManager mInstance;
 
-    protected MovieReminderManager(Context context) {
+    protected GameReminderManager(Context context) {
         super(context);
     }
 
     public static synchronized void initializeInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new MovieReminderManager(context);
+            mInstance = new GameReminderManager(context);
         } else {
-            throw new IllegalStateException(MovieReminderManager.class.getSimpleName() + " was already initialized.");
+            throw new IllegalStateException(GameReminderManager.class.getSimpleName() + " was already initialized.");
         }
     }
 
-    public static MovieReminderManager getInstance(Context context) {
+    public static GameReminderManager getInstance(Context context) {
         if (mInstance == null) {
             initializeInstance(context);
         }
@@ -35,7 +35,7 @@ public class MovieReminderManager extends ReminderManager {
 
     @Override
     public String getType() {
-        return String.valueOf(Trailer.Type.MOVIE.ordinal());
+        return String.valueOf(Trailer.Type.GAME.ordinal());
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MovieReminderManager extends ReminderManager {
             String movieJson = cursor.getString(urlIndex);
             int notificationId = cursor.getInt(notificationIdIndex);
             long timestamp = Long.parseLong(cursor.getString(timestampIndex));
-            reminder = new MovieReminder(id, user, notificationId, new Date(timestamp), new Movie(movieJson));
+            reminder = new GameReminder(id, user, notificationId, new Date(timestamp), new Game(movieJson));
         } catch (Exception e) {
             e.printStackTrace();
         }

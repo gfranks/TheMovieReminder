@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.github.ksoichiro.android.observablescrollview.ObservableScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/movie_scroll_view"
+    android:id="@+id/game_scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/movie_image_url"
+                    android:id="@+id/game_image_url"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop" />
@@ -26,7 +26,7 @@
                 <include layout="@layout/layout_released_view" />
 
                 <ImageView
-                    android:id="@+id/movie_reminder_set"
+                    android:id="@+id/game_reminder_set"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_margin="5dp"
@@ -35,7 +35,7 @@
                     android:visibility="invisible" />
 
                 <ImageButton
-                    android:id="@+id/movie_play"
+                    android:id="@+id/game_play"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -58,7 +58,7 @@
                     android:paddingTop="5dp">
 
                     <TextView
-                        android:id="@+id/movie_title"
+                        android:id="@+id/game_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -66,7 +66,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/movie_description"
+                        android:id="@+id/game_description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -85,7 +85,7 @@
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/movie_release_date"
+                            android:id="@+id/game_release_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
@@ -102,11 +102,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/movie_directors"
+                            android:text="@string/game_console"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/movie_directors"
+                            android:id="@+id/game_console"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
@@ -123,11 +123,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/movie_stars"
+                            android:text="@string/game_company"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/movie_stars"
+                            android:id="@+id/game_company"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="3dp"
@@ -147,7 +147,7 @@
         </LinearLayout>
 
         <com.gf.movie.reminder.ui.Fab
-            android:id="@+id/movie_fab"
+            android:id="@+id/game_fab"
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
             android:layout_gravity="end"

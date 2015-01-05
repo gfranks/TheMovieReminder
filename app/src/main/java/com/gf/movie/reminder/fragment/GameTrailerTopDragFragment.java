@@ -11,60 +11,60 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
-import com.gf.movie.reminder.data.model.Movie;
-import com.gf.movie.reminder.data.model.MovieReminder;
+import com.gf.movie.reminder.data.model.Game;
+import com.gf.movie.reminder.data.model.GameReminder;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-public class MovieTrailerTopDragFragment extends BaseFragment implements View.OnClickListener {
+public class GameTrailerTopDragFragment extends BaseFragment implements View.OnClickListener {
 
-    public static final String TAG = "movie_trailer_top";
+    public static final String TAG = "game_trailer_top";
 
     @Inject
     Picasso mPicasso;
 
-    private Movie mMovie;
-    private View mMoviePlay;
-    private ImageView mMovieImage;
+    private Game mGame;
+    private View mGamePlay;
+    private ImageView mGameImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movie_trailer_top_drag, container, false);
+        return inflater.inflate(R.layout.fragment_game_trailer_top_drag, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mMoviePlay = view.findViewById(R.id.movie_play);
-        mMovieImage = (ImageView) view.findViewById(R.id.movie_image_url);
+        mGamePlay = view.findViewById(R.id.game_play);
+        mGameImage = (ImageView) view.findViewById(R.id.game_image_url);
 
-        mMoviePlay.setOnClickListener(this);
+        mGamePlay.setOnClickListener(this);
     }
 
-    public void updateWithReminder(MovieReminder reminder) {
-        mMovie = (Movie) reminder.getTrailer();
+    public void updateWithReminder(GameReminder reminder) {
+        mGame = (Game) reminder.getTrailer();
         update();
     }
 
-    public void updateWithMovie(Movie movie) {
-        mMovie = movie;
+    public void updateWithGame(Game game) {
+        mGame = game;
         update();
     }
 
     private void update() {
-        mPicasso.load(mMovie.getImageUrl())
+        mPicasso.load(mGame.getImageUrl())
 //                .centerCrop()
                 .placeholder(R.drawable.img_photo_loading_small)
                 .error(R.drawable.img_failed_to_receive_small)
-                .into(mMovieImage);
+                .into(mGameImage);
 
         TextView releasedTV = (TextView) getView().findViewById(R.id.trailer_released);
-        if (mMovie.isReleased()) {
+        if (mGame.isReleased()) {
             releasedTV.setVisibility(View.VISIBLE);
-            releasedTV.setText(getString(R.string.trailers_movie_in_theaters));
+            releasedTV.setText(getString(R.string.trailers_game_released));
         } else {
             releasedTV.setVisibility(View.GONE);
         }
@@ -72,8 +72,8 @@ public class MovieTrailerTopDragFragment extends BaseFragment implements View.On
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == mMoviePlay.getId()) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mMovie.getVideoUrl())));
+        if (v.getId() == mGamePlay.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mGame.getVideoUrl())));
         }
     }
 }

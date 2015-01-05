@@ -29,7 +29,11 @@
             android:name=".activity.MovieTrailerActivity"
             android:label="@string/app_name" />
 
-        <receiver android:name=".util.MovieReminderReceiver" />
+        <activity
+            android:name=".activity.GameTrailerActivity"
+            android:label="@string/app_name" />
+
+        <receiver android:name=".util.ReminderReceiver" />
 
     </application>
 

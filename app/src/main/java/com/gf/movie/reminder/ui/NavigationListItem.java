@@ -5,8 +5,10 @@ import android.content.Context;
 import com.gf.movie.reminder.R;
 
 public enum NavigationListItem {
-    TRAILER(R.string.nav_trailer),
-    REMINDERS(R.string.nav_reminders),
+    MOVIE_TRAILERS(R.string.nav_movie_trailer),
+    MOVIE_REMINDERS(R.string.nav_movie_reminders),
+    GAME_TRAILERS(R.string.nav_game_trailer),
+    GAME_REMINDERS(R.string.nav_game_reminders),
     LOGIN(R.string.nav_login),
     COPYRIGHT(R.string.copyright);
 

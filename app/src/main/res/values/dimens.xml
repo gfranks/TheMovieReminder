@@ -20,8 +20,8 @@
     <dimen name="divider_height">1dp</dimen>
 
     <dimen name="trailers_column_width">160dp</dimen>
-    <dimen name="movie_item_height">175dp</dimen>
-    <dimen name="movie_item_image_height">200dp</dimen>
+    <dimen name="trailer_item_height">175dp</dimen>
+    <dimen name="trailer_item_image_height">200dp</dimen>
 
     <item name="drag_panel_x_scale_factor" format="float" type="dimen">2.3</item>
     <item name="drag_panel_y_scale_factor" format="float" type="dimen">2.3</item>

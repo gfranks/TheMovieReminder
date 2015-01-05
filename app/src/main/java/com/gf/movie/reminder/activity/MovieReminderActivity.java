@@ -10,12 +10,14 @@ import android.view.View;
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.activity.base.BaseActivity;
 import com.gf.movie.reminder.data.model.MovieReminder;
+import com.gf.movie.reminder.fragment.GameRemindersFragment;
+import com.gf.movie.reminder.fragment.GameTrailersFragment;
+import com.gf.movie.reminder.fragment.MovieRemindersFragment;
+import com.gf.movie.reminder.fragment.MovieTrailersFragment;
 import com.gf.movie.reminder.fragment.NavigationFragment;
-import com.gf.movie.reminder.fragment.RemindersFragment;
-import com.gf.movie.reminder.fragment.TrailersFragment;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
 import com.gf.movie.reminder.ui.NavigationListItem;
-import com.gf.movie.reminder.util.MovieNotificationManager;
+import com.gf.movie.reminder.util.NotificationManager;
 import com.gf.movie.reminder.view.FeedbackBar;
 
 import javax.inject.Inject;
@@ -39,7 +41,7 @@ public class MovieReminderActivity extends BaseActivity implements NavigationFra
         mExpandableFab.setFadeOnFabClick(false);
         mExpandableFab.setOnFabClickListener(this);
 
-        onItemSelected(NavigationListItem.values()[mPrefs.getInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.TRAILER.ordinal())]);
+        onItemSelected(NavigationListItem.values()[mPrefs.getInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.MOVIE_TRAILERS.ordinal())]);
     }
 
     @Override
@@ -51,10 +53,10 @@ public class MovieReminderActivity extends BaseActivity implements NavigationFra
             fragment.setOnNavigationItemSelectedListener(this);
         }
 
-        if (getIntent().hasExtra(MovieNotificationManager.EXTRA_MOVIE_REMINDER)) {
-            MovieReminder reminder = getIntent().getParcelableExtra(MovieNotificationManager.EXTRA_MOVIE_REMINDER);
-            getFeedbackBar().showInfo(String.format(getString(R.string.trailers_movie_notified), reminder.getMovie().getTitle()), false, FeedbackBar.LENGTH_LONG);
-            getIntent().removeExtra(MovieNotificationManager.EXTRA_MOVIE_REMINDER);
+        if (getIntent().hasExtra(NotificationManager.EXTRA_MOVIE_REMINDER)) {
+            MovieReminder reminder = getIntent().getParcelableExtra(NotificationManager.EXTRA_MOVIE_REMINDER);
+            getFeedbackBar().showInfo(String.format(getString(R.string.trailers_movie_notified), reminder.getTrailer().getTitle()), false, FeedbackBar.LENGTH_LONG);
+            getIntent().removeExtra(NotificationManager.EXTRA_MOVIE_REMINDER);
         }
     }
 
@@ -75,22 +77,40 @@ public class MovieReminderActivity extends BaseActivity implements NavigationFra
     public void onItemSelected(NavigationListItem item) {
         mDrawerLayout.closeDrawer(GravityCompat.START);
         switch (item) {
-            case TRAILER:
-                mPrefs.edit().putInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.TRAILER.ordinal()).apply();
+            case MOVIE_TRAILERS:
+                mPrefs.edit().putInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.MOVIE_TRAILERS.ordinal()).apply();
                 mExpandableFab.slideInFab();
-                TrailersFragment trailersFragment = (TrailersFragment) getSupportFragmentManager().findFragmentByTag(TrailersFragment.TAG);
-                if (trailersFragment == null) {
-                    trailersFragment = new TrailersFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_content, trailersFragment, TrailersFragment.TAG).commit();
+                MovieTrailersFragment movieTrailersFragment = (MovieTrailersFragment) getSupportFragmentManager().findFragmentByTag(MovieTrailersFragment.TAG);
+                if (movieTrailersFragment == null) {
+                    movieTrailersFragment = new MovieTrailersFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_content, movieTrailersFragment, MovieTrailersFragment.TAG).commit();
                 }
                 break;
-            case REMINDERS:
-                mPrefs.edit().putInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.REMINDERS.ordinal()).apply();
+            case MOVIE_REMINDERS:
+                mPrefs.edit().putInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.MOVIE_REMINDERS.ordinal()).apply();
                 mExpandableFab.slideOutFab();
-                RemindersFragment remindersFragment = (RemindersFragment) getSupportFragmentManager().findFragmentByTag(RemindersFragment.TAG);
-                if (remindersFragment == null) {
-                    remindersFragment = new RemindersFragment();
-                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_content, remindersFragment, RemindersFragment.TAG).commit();
+                MovieRemindersFragment movieRemindersFragment = (MovieRemindersFragment) getSupportFragmentManager().findFragmentByTag(MovieRemindersFragment.TAG);
+                if (movieRemindersFragment == null) {
+                    movieRemindersFragment = new MovieRemindersFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_content, movieRemindersFragment, MovieRemindersFragment.TAG).commit();
+                }
+                break;
+            case GAME_TRAILERS:
+                mPrefs.edit().putInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.GAME_TRAILERS.ordinal()).apply();
+                mExpandableFab.slideInFab();
+                GameTrailersFragment gameTrailersFragment = (GameTrailersFragment) getSupportFragmentManager().findFragmentByTag(GameTrailersFragment.TAG);
+                if (gameTrailersFragment == null) {
+                    gameTrailersFragment = new GameTrailersFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_content, gameTrailersFragment, GameTrailersFragment.TAG).commit();
+                }
+                break;
+            case GAME_REMINDERS:
+                mPrefs.edit().putInt(LAST_SELECTED_NAV_ITEM, NavigationListItem.GAME_REMINDERS.ordinal()).apply();
+                mExpandableFab.slideOutFab();
+                GameRemindersFragment gameRemindersFragment = (GameRemindersFragment) getSupportFragmentManager().findFragmentByTag(GameRemindersFragment.TAG);
+                if (gameRemindersFragment == null) {
+                    gameRemindersFragment = new GameRemindersFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.activity_content, gameRemindersFragment, GameRemindersFragment.TAG).commit();
                 }
                 break;
         }

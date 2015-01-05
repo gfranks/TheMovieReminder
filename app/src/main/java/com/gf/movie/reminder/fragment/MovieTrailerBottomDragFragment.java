@@ -12,7 +12,7 @@ import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminder;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
 import com.gf.movie.reminder.ui.Fab;
-import com.gf.movie.reminder.util.MovieNotificationManager;
+import com.gf.movie.reminder.util.NotificationManager;
 import com.gf.movie.reminder.view.FeedbackBar;
 
 import javax.inject.Inject;
@@ -22,7 +22,7 @@ public class MovieTrailerBottomDragFragment extends BaseFragment implements View
     public static final String TAG = "movie_trailer_bottom";
 
     @Inject
-    MovieNotificationManager mNotificationManager;
+    NotificationManager mNotificationManager;
 
     private Movie mMovie;
     private MovieReminder mReminder;
@@ -57,7 +57,7 @@ public class MovieTrailerBottomDragFragment extends BaseFragment implements View
 
     public void updateWithReminder(MovieReminder reminder) {
         mReminder = reminder;
-        mMovie = reminder.getMovie();
+        mMovie = (Movie) reminder.getTrailer();
         update();
     }
 

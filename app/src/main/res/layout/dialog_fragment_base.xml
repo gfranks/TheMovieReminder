@@ -16,28 +16,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minWidth="275dp"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/dialog_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:textColor="@color/theme_white"
                 android:textSize="17sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/dialog_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
                 android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:textColor="@color/theme_white"
                 android:textSize="14sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <FrameLayout
                 android:id="@+id/dialog_content"
@@ -48,31 +48,31 @@
                 android:id="@+id/dialog_button_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:orientation="horizontal"
                 android:paddingTop="5dp"
-                android:layout_gravity="end"
-                android:weightSum="2"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:weightSum="2">
 
                 <Button
-                    style="@style/ButtonStyle"
                     android:id="@+id/dialog_button_negative"
+                    style="@style/ButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:minWidth="75dp"
                     android:text="@string/cancel"
-                    android:textColor="@color/theme_cyan"/>
+                    android:textColor="@color/theme_cyan" />
 
                 <Button
-                    style="@style/ButtonStyle"
                     android:id="@+id/dialog_button_positive"
+                    style="@style/ButtonStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:minWidth="75dp"
                     android:text="@string/ok"
-                    android:textColor="@color/theme_cyan"/>
+                    android:textColor="@color/theme_cyan" />
 
             </LinearLayout>
 

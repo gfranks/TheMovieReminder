@@ -41,8 +41,10 @@
     <string name="action_reminders">Remind Me</string>
 
     <!-- NavigationFragment Strings -->
-    <string name="nav_trailer">Trailers</string>
-    <string name="nav_reminders">Reminders</string>
+    <string name="nav_movie_trailer">Movie Trailers</string>
+    <string name="nav_movie_reminders">Movie Reminders</string>
+    <string name="nav_game_trailer">Game Trailers</string>
+    <string name="nav_game_reminders">Game Reminders</string>
     <string name="nav_login">Log In</string>
     <string name="nav_logout">Log Out</string>
     <string name="dev_toggle_dialog_title">Developer Use</string>
@@ -51,7 +53,9 @@
     <string name="dev_toggle_dialog_error">You have not entered the correct developer password.</string>
 
     <!-- TrailersFragment Strings -->
-    <string name="trailers">Trailers</string>
+    <string name="movie_trailers">Movie Trailers</string>
+    <string name="game_trailers">Game Trailers</string>
+
     <string name="trailers_empty_text">There are no trailers to display.</string>
     <string name="trailers_select_movie">Select a movie you wish to be reminded of upon release.</string>
     <string name="trailers_movie_reminder_set">You will be notified when this movie has been released.</string>
@@ -61,10 +65,20 @@
     <string name="trailers_movie_notified">You can now go see %s!</string>
     <string name="trailers_movie_in_theaters">In Theaters</string>
     <string name="trailers_movie_on_dvd">On DVD/Blu ray</string>
-    <string name="movie_transition_name">movie_image</string>
+    <string name="trailer_transition_name">trailer_image</string>
+
+    <string name="trailers_select_game">Select a game you wish to be reminded of upon release.</string>
+    <string name="trailers_game_reminder_set">You will be notified when this game has been released.</string>
+    <string name="trailers_game_reminders_set">You will be notified when these games have been released.</string>
+    <string name="trailers_game_reminder_removed">You will no longer be notified when this game is released.</string>
+    <string name="trailers_game_reminder_already_set">You have already added a reminder for this game.</string>
+    <string name="trailers_game_notified">You can now go buy and play %s!</string>
+    <string name="trailers_game_released">Released</string>
 
     <!-- RemindersFragment Strings -->
-    <string name="reminders">Reminders</string>
+    <string name="movie_reminders">Movie Reminders</string>
+    <string name="game_reminders">Game Reminders</string>
+
     <string name="reminders_empty_text">You have not set any reminders.</string>
     <string name="reminders_selected">%d Selected</string>
     <string name="reminders_delete_title">Delete Reminders?</string>
@@ -88,11 +102,14 @@
     <!-- Copyright -->
     <string name="copyright">Copyright &#169; 2015 Garrett Franks. All rights reserved.</string>
 
-    <!-- MovieTrailerActivity Strings -->
-    <string name="movie_set_reminder">Remind Me!</string>
-    <string name="movie_release_date">Release Date:</string>
+    <!-- MovieTrailerActivity && GameTrailerActivity Strings -->
+    <string name="trailer_set_reminder">Remind Me!</string>
     <string name="movie_directors">Director(s):</string>
     <string name="movie_stars">Stars:</string>
+
+    <string name="game_console">Console:</string>
+    <string name="game_company">By:</string>
+    <string name="trailer_release_date">Release Date:</string>
 
     <!-- PullToRefreshLayout Colors Array -->
     <integer-array name="pull_to_refresh_colors">

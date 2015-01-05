@@ -74,9 +74,13 @@ public class NavigationFragment extends BaseFragment implements AdapterView.OnIt
         NavigationListItem item = NavigationListItem.values()[position];
 
         switch (item) {
-            case TRAILER:
+            case MOVIE_TRAILERS:
                 break;
-            case REMINDERS:
+            case MOVIE_REMINDERS:
+                break;
+            case GAME_TRAILERS:
+                break;
+            case GAME_REMINDERS:
                 break;
             case LOGIN:
                 if (mAccountManager.isLoggedIn()) {

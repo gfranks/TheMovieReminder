@@ -1,5 +1,6 @@
 package com.gf.movie.reminder.data.api;
 
+import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminderSession;
 
@@ -23,7 +24,10 @@ public interface RequestService {
                   Callback<MovieReminderSession> cb);
 
     @GET("/search?part=snippet&q=trailers&type=video&videoCaption=closedCaption")
-    void getTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb);
+    void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb);
+
+    @GET("/search?part=snippet&q=trailers&type=video&videoCaption=closedCaption")
+    void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb);
 
 //    @POST("/api/auth/exchange/")
 //    void exchangeSession( //
