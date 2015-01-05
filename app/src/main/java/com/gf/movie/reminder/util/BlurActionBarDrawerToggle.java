@@ -39,8 +39,8 @@ public class BlurActionBarDrawerToggle extends ActionBarDrawerToggle {
      * <p>String resources must be provided to describe the open/close drawer actions for
      * accessibility services.</p>
      *
-     * @param activity                  The Activity hosting the drawer
-     * @param drawerLayout              The DrawerLayout to link to the given Activity's ActionBar
+     * @param activity     The Activity hosting the drawer
+     * @param drawerLayout The DrawerLayout to link to the given Activity's ActionBar
      */
     public BlurActionBarDrawerToggle(Activity activity, DrawerLayout drawerLayout) {
         super(activity, drawerLayout, R.string.drawer_open, R.string.drawer_close);

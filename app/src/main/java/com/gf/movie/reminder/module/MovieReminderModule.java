@@ -2,6 +2,7 @@ package com.gf.movie.reminder.module;
 
 import android.app.Application;
 
+import com.gf.movie.reminder.activity.GameTrailerActivity;
 import com.gf.movie.reminder.activity.LogInActivity;
 import com.gf.movie.reminder.activity.MovieReminderActivity;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
@@ -26,8 +27,9 @@ import dagger.Provides;
         injects = {
                 BaseActivity.class,
                 MovieReminderActivity.class,
-                LogInActivity.class,
-                MovieTrailerActivity.class
+                MovieTrailerActivity.class,
+                GameTrailerActivity.class,
+                LogInActivity.class
         },
         library = true,
         complete = false

@@ -13,6 +13,7 @@ import android.view.View;
 import com.gf.movie.reminder.BuildConfig;
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.application.MovieReminderApplication;
+import com.gf.movie.reminder.fragment.NavigationFragment;
 import com.gf.movie.reminder.module.ActivityModule;
 import com.gf.movie.reminder.ui.AppContainer;
 import com.gf.movie.reminder.ui.AppContainerContentInterface;
@@ -150,15 +151,27 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
     @Override
     public void onDrawerOpened(View drawerView) {
         mMenu.clear();
+        NavigationFragment fragment = (NavigationFragment) getSupportFragmentManager().findFragmentByTag(NavigationFragment.TAG);
+        if (fragment != null) {
+            fragment.onDrawerOpened(drawerView);
+        }
     }
 
     @Override
     public void onDrawerClosed(View drawerView) {
         invalidateOptionsMenu();
+        NavigationFragment fragment = (NavigationFragment) getSupportFragmentManager().findFragmentByTag(NavigationFragment.TAG);
+        if (fragment != null) {
+            fragment.onDrawerClosed(drawerView);
+        }
     }
 
     @Override
     public void onDrawerSlide(View drawerView, float slideOffset) {
+        NavigationFragment fragment = (NavigationFragment) getSupportFragmentManager().findFragmentByTag(NavigationFragment.TAG);
+        if (fragment != null) {
+            fragment.onDrawerSlide(drawerView, slideOffset);
+        }
     }
 
     protected void addNavigationDrawerComponent() {

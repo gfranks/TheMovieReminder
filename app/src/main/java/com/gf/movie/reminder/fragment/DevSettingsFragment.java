@@ -62,6 +62,7 @@ public class DevSettingsFragment extends BaseFragment {
     private Spinner mImagesIndicatorsView;
     private CheckBox mTransitionAnimation;
     private CheckBox mDrawerLayoutBlur;
+    private CheckBox mTrailerPanel;
 
     private static String getDensityString(DisplayMetrics displayMetrics) {
         switch (displayMetrics.densityDpi) {
@@ -115,6 +116,7 @@ public class DevSettingsFragment extends BaseFragment {
 
         mTransitionAnimation = (CheckBox) view.findViewById(R.id.dev_transition_animation);
         mDrawerLayoutBlur = (CheckBox) view.findViewById(R.id.dev_drawer_layout_blur);
+        mTrailerPanel = (CheckBox) view.findViewById(R.id.dev_trailer_panel);
     }
 
     @Override
@@ -125,6 +127,7 @@ public class DevSettingsFragment extends BaseFragment {
         setupImagesSection();
         setupAnimationSection();
         setupDrawerLayoutSection();
+        setupAdditionalSection();
         setupBuildSection();
         setupDeviceSection();
     }
@@ -206,6 +209,19 @@ public class DevSettingsFragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ((AppContainerActionBarDrawerToggle) getDrawerLayout().getDrawerListener()).setBlurEnabled(isChecked);
                 Utils.setDrawerLayoutBlurEnabled(mPrefs, isChecked);
+            }
+        });
+    }
+
+    private void setupAdditionalSection() {
+        if (Utils.isTrailerPanelEnabled(mPrefs)) {
+            mTrailerPanel.setChecked(true);
+        }
+
+        mTrailerPanel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Utils.setTrailerPanelEnabled(mPrefs, isChecked);
             }
         });
     }

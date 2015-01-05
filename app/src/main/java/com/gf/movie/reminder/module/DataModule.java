@@ -9,8 +9,9 @@ import android.util.Log;
 import com.gf.movie.reminder.BuildConfig;
 import com.gf.movie.reminder.application.MovieReminderApplication;
 import com.gf.movie.reminder.util.AccountManager;
-import com.gf.movie.reminder.util.MovieNotificationManager;
+import com.gf.movie.reminder.util.GameReminderManager;
 import com.gf.movie.reminder.util.MovieReminderManager;
+import com.gf.movie.reminder.util.NotificationManager;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.picasso.Picasso;
@@ -29,7 +30,7 @@ import io.realm.Realm;
                 ApiModule.class
         },
         injects = {
-                MovieNotificationManager.class
+                NotificationManager.class
         },
         complete = false,
         library = true
@@ -90,13 +91,19 @@ public class DataModule {
 
     @Provides
     @Singleton
-    MovieNotificationManager provideMovieNotificationManager(AccountManager accountManager, MovieReminderManager reminderManager) {
-        return MovieNotificationManager.getInstance(accountManager, reminderManager);
+    NotificationManager provideMovieNotificationManager(AccountManager accountManager, MovieReminderManager reminderManager) {
+        return NotificationManager.getInstance(accountManager, reminderManager);
     }
 
     @Provides
     @Singleton
     MovieReminderManager provideMovieReminderManager(Application app) {
         return MovieReminderManager.getInstance(app);
+    }
+
+    @Provides
+    @Singleton
+    GameReminderManager provideGameReminderManager(Application app) {
+        return GameReminderManager.getInstance(app);
     }
 }

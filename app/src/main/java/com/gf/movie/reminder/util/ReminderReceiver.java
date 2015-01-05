@@ -1,7 +1,6 @@
 package com.gf.movie.reminder.util;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,18 +11,18 @@ import android.os.AsyncTask;
 
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
-import com.gf.movie.reminder.data.model.MovieReminder;
+import com.gf.movie.reminder.data.model.Reminder;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class MovieReminderReceiver extends BroadcastReceiver {
+public class ReminderReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent receivedIntent) {
-        MovieReminder reminder = receivedIntent.getParcelableExtra(MovieNotificationManager.EXTRA_MOVIE_REMINDER);
+        Reminder reminder = receivedIntent.getParcelableExtra(NotificationManager.EXTRA_MOVIE_REMINDER);
 
         Intent intent = new Intent(context, MovieTrailerActivity.class);
         intent.putExtras(receivedIntent.getExtras());
@@ -31,8 +30,8 @@ public class MovieReminderReceiver extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder notificationBuilder = new Notification.Builder(context)
-                .setContentTitle(reminder.getMovie().getTitleString())
-                .setContentText(reminder.getMovie().getDescription())
+                .setContentTitle(reminder.getTrailer().getTitleString())
+                .setContentText(reminder.getTrailer().getDescription())
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true);
@@ -42,20 +41,20 @@ public class MovieReminderReceiver extends BroadcastReceiver {
         MovieReminderManager.getInstance(context).deleteReminder(reminder);
     }
 
-    private class SendNotification extends AsyncTask<MovieReminder, Void, Bitmap> {
+    private class SendNotification extends AsyncTask<Reminder, Void, Bitmap> {
 
-        NotificationManager mNotificationManager;
+        android.app.NotificationManager mNotificationManager;
         private Notification.Builder mNotificationBuilder;
 
         public SendNotification(Context context, Notification.Builder notificationBuilder) {
-            mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager = (android.app.NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationBuilder = notificationBuilder;
         }
 
         @Override
-        protected Bitmap doInBackground(MovieReminder... params) {
+        protected Bitmap doInBackground(Reminder... params) {
             try {
-                URL url = new URL(params[0].getMovie().getImageUrl());
+                URL url = new URL(params[0].getTrailer().getImageUrl());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.connect();

@@ -13,7 +13,7 @@ import com.gf.movie.reminder.activity.base.BaseActivity;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminder;
 import com.gf.movie.reminder.ui.Fab;
-import com.gf.movie.reminder.util.MovieNotificationManager;
+import com.gf.movie.reminder.util.NotificationManager;
 import com.gf.movie.reminder.util.Utils;
 import com.gf.movie.reminder.view.FeedbackBar;
 import com.squareup.picasso.Picasso;
@@ -30,7 +30,7 @@ public class MovieTrailerActivity extends BaseActivity implements View.OnClickLi
     Picasso mPicasso;
 
     @Inject
-    MovieNotificationManager mNotificationManager;
+    NotificationManager mNotificationManager;
 
     @Inject
     SharedPreferences mPrefs;
@@ -59,7 +59,7 @@ public class MovieTrailerActivity extends BaseActivity implements View.OnClickLi
 
         if (mReminder != null) {
             mReminderSet = true;
-            mMovie = mReminder.getMovie();
+            mMovie = (Movie) mReminder.getTrailer();
             if (getIntent().hasExtra(EXTRA_NOTIFICATION)) {
                 getFeedbackBar().showInfo(String.format(getString(R.string.trailers_movie_notified), mMovie.getTitle()), false, FeedbackBar.LENGTH_LONG);
             }
@@ -80,8 +80,8 @@ public class MovieTrailerActivity extends BaseActivity implements View.OnClickLi
         mFab.animateVisibility(0f, 1f, View.VISIBLE);
         mFab.setOnClickListener(this);
 
-        TextView releasedTV = (TextView) findViewById(R.id.movie_released);
-        if (mMovie.isInTheaters()) {
+        TextView releasedTV = (TextView) findViewById(R.id.trailer_released);
+        if (mMovie.isReleased()) {
             releasedTV.setVisibility(View.VISIBLE);
             releasedTV.setText(getString(R.string.trailers_movie_in_theaters));
         } else {

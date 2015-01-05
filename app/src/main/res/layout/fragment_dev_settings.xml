@@ -148,6 +148,27 @@
 
     </TableRow>
 
+    <!-- ADDITIONAL SETTINGS SECTION -->
+    <TableRow android:layout_marginTop="10dp">
+
+        <TextView
+            style="@style/DebugInfoHeaderTextStyle"
+            android:layout_gravity="start|end"
+            android:layout_span="2"
+            android:text="@string/additional" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            style="@style/DebugInfoDetailTextStyle"
+            android:layout_gravity="start|center_vertical"
+            android:text="@string/tailer_panel" />
+
+        <CheckBox android:id="@+id/dev_trailer_panel" />
+
+    </TableRow>
+
     <!-- BUILD INFORMATION SECTION -->
 
     <TableRow android:layout_marginTop="10dp">

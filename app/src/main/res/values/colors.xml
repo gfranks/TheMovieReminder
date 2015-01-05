@@ -20,7 +20,7 @@
     <color name="theme_color_primary">@color/theme_red</color>
     <color name="theme_color_primary_dark">@color/theme_red_dark</color>
     <color name="theme_control_highlight">@color/theme_color_primary_dark</color>
-    <color name="theme_cyan">#70D9EB</color>
+    <color name="theme_cyan">#83CBC4</color>
     <color name="theme_glass">#88ffffff</color>
     <color name="theme_gray">#272822</color>
     <color name="theme_gray_2">#303030</color>

@@ -22,7 +22,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:scaleType="centerCrop"
-                    android:transitionName="@string/movie_transition_name" />
+                    android:transitionName="@string/trailer_transition_name" />
 
                 <include layout="@layout/layout_released_view" />
 
@@ -82,7 +82,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/movie_release_date"
+                            android:text="@string/trailer_release_date"
                             android:textStyle="bold" />
 
                         <TextView
@@ -151,10 +151,10 @@
             android:id="@+id/movie_fab"
             android:layout_width="@dimen/fab_size"
             android:layout_height="@dimen/fab_size"
-            android:layout_marginTop="172dp"
             android:layout_gravity="end"
-            android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="172dp"
             android:background="@drawable/bg_fab"
             android:elevation="@dimen/fab_elevation"
             android:src="@drawable/img_reminders_unselected"

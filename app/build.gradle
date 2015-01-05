@@ -122,6 +122,7 @@ dependencies {
     compile 'com.astuetz:pagerslidingtabstrip:1.0.1'
     compile 'io.realm:realm-android:0.76.0'
     compile 'com.github.ksoichiro:android-observablescrollview:1.4.0'
+    compile 'com.github.pedrovgs:draggablepanel:1.5@aar'
 
     provided 'com.squareup.dagger:dagger-compiler:1.2.2'
     debugCompile 'com.squareup.retrofit:retrofit-mock:1.7.1'

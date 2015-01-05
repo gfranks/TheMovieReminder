@@ -20,34 +20,41 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
-import com.gf.movie.reminder.activity.MovieTrailerActivity;
+import com.gf.movie.reminder.activity.GameTrailerActivity;
 import com.gf.movie.reminder.adapter.RemindersGridAdapter;
-import com.gf.movie.reminder.data.model.MovieReminder;
+import com.gf.movie.reminder.data.model.GameReminder;
+import com.gf.movie.reminder.data.model.Reminder;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
-import com.gf.movie.reminder.util.MovieReminderManager;
+import com.gf.movie.reminder.util.GameReminderManager;
 import com.gf.movie.reminder.util.Utils;
+import com.github.pedrovgs.DraggableListener;
+import com.github.pedrovgs.DraggablePanel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-public class RemindersFragment extends BaseFragment implements AdapterView.OnItemClickListener,
-        AbsListView.MultiChoiceModeListener {
+public class GameRemindersFragment extends BaseFragment implements AdapterView.OnItemClickListener,
+        AbsListView.MultiChoiceModeListener, DraggableListener {
 
-    public static final String TAG = "reminders";
+    public static final String TAG = "game_reminders";
 
     @Inject
     Picasso mPicasso;
 
     @Inject
-    MovieReminderManager mReminderManager;
+    GameReminderManager mReminderManager;
 
     @Inject
     SharedPreferences mPrefs;
 
     private GridView mGrid;
     private RemindersGridAdapter mAdapter;
+    private DraggablePanel mDraggablePanel;
+
+    private GameTrailerTopDragFragment mGameTrailerTopDragFragment;
+    private GameTrailerBottomDragFragment mGameTrailerBottomDragFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +64,7 @@ public class RemindersFragment extends BaseFragment implements AdapterView.OnIte
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_reminders, container, false);
+        return inflater.inflate(R.layout.fragment_movie_reminders, container, false);
     }
 
     @Override
@@ -71,18 +78,28 @@ public class RemindersFragment extends BaseFragment implements AdapterView.OnIte
         TextView emptyView = (TextView) view.findViewById(R.id.adapter_empty_text);
         emptyView.setText(getString(R.string.reminders_empty_text));
         mGrid.setEmptyView(emptyView);
+
+        mGameTrailerTopDragFragment = new GameTrailerTopDragFragment();
+        mGameTrailerBottomDragFragment = new GameTrailerBottomDragFragment();
+        mDraggablePanel = (DraggablePanel) view.findViewById(R.id.reminders_draggable_panel);
+        mDraggablePanel.setDraggableListener(this);
+        mDraggablePanel.setFragmentManager(getChildFragmentManager());
+        mDraggablePanel.setTopFragment(mGameTrailerTopDragFragment);
+        mDraggablePanel.setBottomFragment(mGameTrailerBottomDragFragment);
+        mDraggablePanel.initializeView();
+        mDraggablePanel.setVisibility(View.GONE);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().setTitle(R.string.reminders);
+        getActivity().setTitle(R.string.game_reminders);
 
         getReminders();
     }
 
     private void getReminders() {
-        ArrayList<MovieReminder> reminders = mReminderManager.getAll();
+        ArrayList<Reminder> reminders = mReminderManager.getAll();
         if (mAdapter == null) {
             mAdapter = new RemindersGridAdapter(getActivity(), reminders, mPicasso);
             mGrid.setAdapter(mAdapter);
@@ -93,14 +110,22 @@ public class RemindersFragment extends BaseFragment implements AdapterView.OnIte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(getActivity(), MovieTrailerActivity.class);
-        intent.putExtra(MovieTrailerActivity.EXTRA_MOVIE_REMINDER, mAdapter.getItem(position));
-
-        if (Utils.isAtLeastLollipop() && Utils.isTransitionAnimationEnabled(mPrefs)) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_image_url), "movie_image");
-            getActivity().startActivity(intent, options.toBundle());
+        if (Utils.isTrailerPanelEnabled(mPrefs)) {
+            getActivity().setTitle(mAdapter.getItem(position).getTrailer().getTitle());
+            mGameTrailerTopDragFragment.updateWithReminder(((GameReminder) mAdapter.getItem(position)));
+            mGameTrailerBottomDragFragment.updateWithReminder(((GameReminder) mAdapter.getItem(position)));
+            mDraggablePanel.setVisibility(View.VISIBLE);
+            mDraggablePanel.maximize();
         } else {
-            startActivity(intent);
+            Intent intent = new Intent(getActivity(), GameTrailerActivity.class);
+            intent.putExtra(GameTrailerActivity.EXTRA_GAME_REMINDER, mAdapter.getItem(position));
+
+            if (Utils.isAtLeastLollipop() && Utils.isTransitionAnimationEnabled(mPrefs)) {
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.trailer_image_url), getString(R.string.trailer_transition_name));
+                getActivity().startActivity(intent, options.toBundle());
+            } else {
+                startActivity(intent);
+            }
         }
     }
 
@@ -135,7 +160,7 @@ public class RemindersFragment extends BaseFragment implements AdapterView.OnIte
                             public void onClick(DialogInterface dialog, int which) {
                                 for (int i = (selected.size() - 1); i >= 0; i--) {
                                     if (selected.valueAt(i)) {
-                                        MovieReminder reminder = mAdapter.getItem(selected.keyAt(i));
+                                        Reminder reminder = mAdapter.getItem(selected.keyAt(i));
                                         mReminderManager.deleteReminder(reminder);
                                         mAdapter.remove(reminder);
                                     }
@@ -160,5 +185,24 @@ public class RemindersFragment extends BaseFragment implements AdapterView.OnIte
     public void onDestroyActionMode(ActionMode mode) {
         getToolbar().setVisibility(View.VISIBLE);
         mAdapter.removeSelection();
+    }
+
+    @Override
+    public void onMaximized() {
+    }
+
+    @Override
+    public void onMinimized() {
+        getActivity().setTitle(getString(R.string.app_name));
+    }
+
+    @Override
+    public void onClosedToLeft() {
+        getActivity().setTitle(getString(R.string.app_name));
+    }
+
+    @Override
+    public void onClosedToRight() {
+        getActivity().setTitle(getString(R.string.app_name));
     }
 }
