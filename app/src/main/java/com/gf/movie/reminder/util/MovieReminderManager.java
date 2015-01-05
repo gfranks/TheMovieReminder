@@ -98,7 +98,7 @@ public class MovieReminderManager extends SQLiteOpenHelper {
             values.put(KEY_MOVIE, reminder.getMovie().toJson());
             values.put(KEY_NOTIFICATION_ID, reminder.getNotificationId());
             values.put(KEY_TIMESTAMP, String.valueOf(reminder.getCreationDate().getTime()));
-            mDb.insert(TABLE_NAME, null, values);
+            mDb.insertWithOnConflict(TABLE_NAME, null, values, SQLiteDatabase.CONFLICT_REPLACE);
         } catch (Throwable t) {
             t.printStackTrace();
         }

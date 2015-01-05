@@ -18,8 +18,10 @@
     <string name="logging">Logging</string>
     <string name="enabled">Enabled</string>
     <string name="blur_enabled">Blur Enabled</string>
+    <string name="tailer_panel">Use Trailer Panel</string>
     <string name="images">Images</string>
     <string name="drawer_layout">Drawer Layout</string>
+    <string name="additional">Additional</string>
     <string name="image_indicators">Indicators</string>
     <string name="build_information">Build Information</string>
     <string name="name">Name</string>
@@ -46,6 +48,7 @@
     <string name="dev_toggle_dialog_title">Developer Use</string>
     <string name="dev_toggle_dialog_message">For developer use only.</string>
     <string name="dev_toggle_dialog_success">Developer Settings Enabled</string>
+    <string name="dev_toggle_dialog_error">You have not entered the correct developer password.</string>
 
     <!-- TrailersFragment Strings -->
     <string name="trailers">Trailers</string>

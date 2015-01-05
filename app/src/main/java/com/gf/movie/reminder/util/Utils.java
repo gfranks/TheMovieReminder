@@ -35,6 +35,14 @@ public class Utils {
         prefs.edit().putBoolean("drawer_layout_blur", enabled).apply();
     }
 
+    public static boolean isTrailerPanelEnabled(SharedPreferences prefs) {
+        return prefs.getBoolean("trailer_panel", false);
+    }
+
+    public static void setTrailerPanelEnabled(SharedPreferences prefs, boolean enabled) {
+        prefs.edit().putBoolean("trailer_panel", enabled).apply();
+    }
+
     public static int getDisplayHeight(Context context) {
         return context.getResources().getDisplayMetrics().heightPixels;
     }
@@ -46,11 +54,11 @@ public class Utils {
     public static Bitmap drawViewToBitmap(View view, int width, int height, float translateX,
                                           float translateY, int downSampling) {
         float scale = 1f / downSampling;
-        int bmpWidth = (int) (width * scale - translateX/downSampling);
-        int bmpHeight = (int) (height * scale - translateY/downSampling);
+        int bmpWidth = (int) (width * scale - translateX / downSampling);
+        int bmpHeight = (int) (height * scale - translateY / downSampling);
         Bitmap dest = Bitmap.createBitmap(bmpWidth, bmpHeight, Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(dest);
-        c.translate(-translateX/downSampling, -translateY/downSampling);
+        c.translate(-translateX / downSampling, -translateY / downSampling);
         if (downSampling > 1) {
             c.scale(scale, scale);
         }
@@ -96,10 +104,14 @@ public class Utils {
                         Handler handler = new Handler();
                         handler.post(endAction);
                     }
+
                     @Override
-                    public void onAnimationStart(Animation animation) { }
+                    public void onAnimationStart(Animation animation) {
+                    }
+
                     @Override
-                    public void onAnimationRepeat(Animation animation) { }
+                    public void onAnimationRepeat(Animation animation) {
+                    }
                 });
             }
             view.startAnimation(alphaAnimation);

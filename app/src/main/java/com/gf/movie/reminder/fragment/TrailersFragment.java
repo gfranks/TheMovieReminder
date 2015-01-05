@@ -29,6 +29,8 @@ import com.gf.movie.reminder.util.MovieNotificationManager;
 import com.gf.movie.reminder.util.Utils;
 import com.gf.movie.reminder.view.FeedbackBar;
 import com.gf.movie.reminder.view.pulltorefresh.PullToRefreshLayout;
+import com.github.pedrovgs.DraggableListener;
+import com.github.pedrovgs.DraggablePanel;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,7 +42,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class TrailersFragment extends BaseFragment implements Callback<ArrayList<Movie>>,
-        AdapterView.OnItemClickListener, AbsListView.MultiChoiceModeListener, PullToRefreshLayout.OnRefreshListener {
+        AdapterView.OnItemClickListener, AbsListView.MultiChoiceModeListener, PullToRefreshLayout.OnRefreshListener,
+        DraggableListener {
 
     public static final String TAG = "trailers";
 
@@ -59,6 +62,11 @@ public class TrailersFragment extends BaseFragment implements Callback<ArrayList
     private GridView mGrid;
     private PullToRefreshLayout mPullToRefreshLayout;
     private TrailersGridAdapter mAdapter;
+    private DraggablePanel mDraggablePanel;
+
+    private MovieTrailerTopDragFragment mMovieTrailerTopDragFragment;
+    private MovieTrailerBottomDragFragment mMovieTrailerBottomDragFragment;
+
     private boolean mIsSelectingNewReminder;
 
     @Override
@@ -86,6 +94,16 @@ public class TrailersFragment extends BaseFragment implements Callback<ArrayList
 
         mPullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.trailers_pull_to_refresh);
         mPullToRefreshLayout.setOnRefreshListener(this);
+
+        mMovieTrailerTopDragFragment = new MovieTrailerTopDragFragment();
+        mMovieTrailerBottomDragFragment = new MovieTrailerBottomDragFragment();
+        mDraggablePanel = (DraggablePanel) view.findViewById(R.id.trailer_draggable_panel);
+        mDraggablePanel.setDraggableListener(this);
+        mDraggablePanel.setFragmentManager(getChildFragmentManager());
+        mDraggablePanel.setTopFragment(mMovieTrailerTopDragFragment);
+        mDraggablePanel.setBottomFragment(mMovieTrailerBottomDragFragment);
+        mDraggablePanel.initializeView();
+        mDraggablePanel.setVisibility(View.GONE);
     }
 
     @Override
@@ -116,14 +134,21 @@ public class TrailersFragment extends BaseFragment implements Callback<ArrayList
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!mIsSelectingNewReminder) {
-            Intent intent = new Intent(getActivity(), MovieTrailerActivity.class);
-            intent.putExtra(MovieTrailerActivity.EXTRA_MOVIE, mAdapter.getItem(position));
-
-            if (Utils.isAtLeastLollipop() && Utils.isTransitionAnimationEnabled(mPrefs)) {
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_image_url), "movie_image");
-                getActivity().startActivity(intent, options.toBundle());
+            if (Utils.isTrailerPanelEnabled(mPrefs)) {
+                getActivity().setTitle(mAdapter.getItem(position).getTitle());
+                mMovieTrailerTopDragFragment.updateWithMovie(mAdapter.getItem(position));
+                mMovieTrailerBottomDragFragment.updateWithMovie(mAdapter.getItem(position));
+                mDraggablePanel.setVisibility(View.VISIBLE);
+                mDraggablePanel.maximize();
             } else {
-                startActivity(intent);
+                Intent intent = new Intent(getActivity(), MovieTrailerActivity.class);
+                intent.putExtra(MovieTrailerActivity.EXTRA_MOVIE, mAdapter.getItem(position));
+                if (Utils.isAtLeastLollipop() && Utils.isTransitionAnimationEnabled(mPrefs)) {
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.movie_image_url), "movie_image");
+                    getActivity().startActivity(intent, options.toBundle());
+                } else {
+                    startActivity(intent);
+                }
             }
         } else {
             mIsSelectingNewReminder = false;
@@ -201,5 +226,28 @@ public class TrailersFragment extends BaseFragment implements Callback<ArrayList
     @Override
     public void onRefresh() {
         mRequestService.getTrailers(getString(R.string.google_api_key), this);
+    }
+
+    @Override
+    public void onMaximized() {
+        getExpandableFab().slideOutFab();
+    }
+
+    @Override
+    public void onMinimized() {
+        getActivity().setTitle(getString(R.string.app_name));
+        getExpandableFab().slideOutFab();
+    }
+
+    @Override
+    public void onClosedToLeft() {
+        getActivity().setTitle(getString(R.string.app_name));
+        getExpandableFab().slideInFab();
+    }
+
+    @Override
+    public void onClosedToRight() {
+        getActivity().setTitle(getString(R.string.app_name));
+        getExpandableFab().slideInFab();
     }
 }

@@ -101,6 +101,10 @@ public class BlurDialogFragmentHelper {
         startExitAnimation();
     }
 
+    public void onDismiss(DialogInterface dialog) {
+        startExitAnimation();
+    }
+
     private void startEnterAnimation() {
         Utils.animateAlpha(mBgView, 0f, 1f, mAnimDuration, null);
         Utils.animateAlpha(mBlurImgView, 0f, 1f, mAnimDuration, null);

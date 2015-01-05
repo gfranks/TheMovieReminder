@@ -16,13 +16,13 @@ import com.gf.movie.reminder.activity.LogInActivity;
 import com.gf.movie.reminder.activity.base.BaseActivity;
 import com.gf.movie.reminder.adapter.NavigationListAdapter;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
-import com.gf.movie.reminder.ui.DevToggleDialog;
 import com.gf.movie.reminder.ui.NavigationListItem;
 import com.gf.movie.reminder.util.AccountManager;
+import com.gf.movie.reminder.util.AppContainerActionBarDrawerToggleListener;
 
 import javax.inject.Inject;
 
-public class NavigationFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener {
+public class NavigationFragment extends BaseFragment implements AdapterView.OnItemClickListener, View.OnClickListener, AppContainerActionBarDrawerToggleListener {
 
     public static final String TAG = "navigation";
     @Inject
@@ -31,6 +31,7 @@ public class NavigationFragment extends BaseFragment implements AdapterView.OnIt
     private ListView mListView;
     private NavigationListAdapter mAdapter;
     private TextView mCopyrightLabel;
+    private boolean mShowDevToggleDialog;
 
     private OnNavigationItemSelectedListener mListener;
 
@@ -101,12 +102,28 @@ public class NavigationFragment extends BaseFragment implements AdapterView.OnIt
             ++mCopyrightClickCount;
             if (mCopyrightClickCount == 15) {
                 mCopyrightClickCount = 0;
-                new DevToggleDialog((BaseActivity) getActivity()).show();
+                mShowDevToggleDialog = true;
                 if (mListener != null) {
                     mListener.onItemSelected(NavigationListItem.COPYRIGHT);
                 }
             }
         }
+    }
+
+    @Override
+    public void onDrawerOpened(View drawerView) {
+    }
+
+    @Override
+    public void onDrawerClosed(View drawerView) {
+        if (mShowDevToggleDialog) {
+            mShowDevToggleDialog = false;
+            new DeveloperToggleDialogFragment().showFromActivity((BaseActivity) getActivity());
+        }
+    }
+
+    @Override
+    public void onDrawerSlide(View drawerView, float slideOffset) {
     }
 
     public interface OnNavigationItemSelectedListener {

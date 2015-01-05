@@ -20,7 +20,8 @@ import com.gf.movie.reminder.view.FeedbackBar;
 
 import javax.inject.Inject;
 
-public class MovieReminderActivity extends BaseActivity implements NavigationFragment.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MovieReminderActivity extends BaseActivity implements NavigationFragment.OnNavigationItemSelectedListener,
+        View.OnClickListener {
 
     private static final String LAST_SELECTED_NAV_ITEM = "last_selected_nav_item";
 

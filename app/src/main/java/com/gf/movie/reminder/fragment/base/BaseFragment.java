@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 
 import com.gf.movie.reminder.activity.base.BaseActivity;
+import com.gf.movie.reminder.ui.AppContainer;
 import com.gf.movie.reminder.ui.ExpandableFab;
 import com.gf.movie.reminder.util.AccountManager;
 import com.gf.movie.reminder.view.FeedbackBar;
@@ -25,6 +26,10 @@ public class BaseFragment extends Fragment {
 
     public AccountManager getAccountManager() {
         return mAccountManager;
+    }
+
+    public AppContainer getAppContainer() {
+        return ((BaseActivity) getActivity()).getAppContainer();
     }
 
     public Toolbar getToolbar() {
