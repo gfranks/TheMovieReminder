@@ -15,7 +15,7 @@ import com.gf.movie.reminder.activity.base.BaseActivity;
 import com.gf.movie.reminder.application.MovieReminderApplication;
 import com.gf.movie.reminder.fragment.base.BaseDialogFragment;
 
-public class DeveloperToggleDialogFragment extends BaseDialogFragment implements View.OnClickListener {
+public class DeveloperToggleDialogFragment extends BaseDialogFragment implements BaseDialogFragment.OnClickListener {
 
     private final String DEVOPER_ENABLE_STRING = "@LGFZ71";
 
@@ -24,7 +24,7 @@ public class DeveloperToggleDialogFragment extends BaseDialogFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.dialog_fragment_developer_toggle, container, false);
+        return onCreateView(inflater, container, savedInstanceState, R.layout.dialog_fragment_developer_toggle);
     }
 
     @Override
@@ -32,13 +32,14 @@ public class DeveloperToggleDialogFragment extends BaseDialogFragment implements
         super.onViewCreated(view, savedInstanceState);
 
         mInput = (EditText) view.findViewById(R.id.dev_toggle_text);
-        view.findViewById(R.id.dev_toggle_cancel).setOnClickListener(this);
-        view.findViewById(R.id.dev_toggle_ok).setOnClickListener(this);
+        setMessage(R.string.dev_toggle_dialog_message);
+        setPositiveButton(R.string.ok, this);
+        setNegativeButton(R.string.cancel, this);
     }
 
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.dev_toggle_ok) {
+    public void onClick(View v, int which) {
+        if (which == POSITIVE_BUTTON) {
             if (mInput.getText().toString().equals(DEVOPER_ENABLE_STRING)) {
                 dismiss();
                 getActivity().getSharedPreferences(MovieReminderApplication.TAG, Context.MODE_PRIVATE).edit().putBoolean("DEV_SETTINGS_ENABLED", true).apply();
@@ -47,7 +48,7 @@ public class DeveloperToggleDialogFragment extends BaseDialogFragment implements
             } else {
                 mInput.setError(getString(R.string.dev_toggle_dialog_error));
             }
-        } else if (v.getId() == R.id.dev_toggle_cancel) {
+        } else {
             dismiss();
         }
     }

@@ -78,13 +78,20 @@
         <item name="android:textColor">@color/theme_white</item>
     </style>
 
-    <style name="EditTextStyle" parent="android:Widget.EditText">
+    <style name="EditTextStyle" parent="Base.Widget.AppCompat.EditText">
         <item name="android:textColor">@color/theme_gray_dark</item>
     </style>
 
     <style name="ButtonStyle" parent="android:Widget.Button">
         <item name="android:background">@drawable/bg_button_default</item>
         <item name="android:textColor">@color/theme_white</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="DialogButtonStyle" parent="android:Widget.Button">
+        <item name="android:background">@drawable/bg_button_dialog</item>
+        <item name="android:textColor">@color/theme_cyan</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
     </style>
