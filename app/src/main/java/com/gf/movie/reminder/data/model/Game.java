@@ -23,6 +23,7 @@ public class Game extends Trailer {
     };
     private Console mConsole;
     private String mCompany;
+
     public Game(Parcel in) {
         readFromParcel(in);
     }

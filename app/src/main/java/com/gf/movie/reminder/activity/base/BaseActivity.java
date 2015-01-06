@@ -42,6 +42,7 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
     AccountManager mAccountManager;
     private Menu mMenu;
     private ObjectGraph mActivityGraph;
+    private boolean mMenuIsCleared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,7 +155,7 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
 
     @Override
     public void onDrawerOpened(View drawerView) {
-        mMenu.clear();
+        clearMenu();
         NavigationFragment fragment = (NavigationFragment) getSupportFragmentManager().findFragmentByTag(NavigationFragment.TAG);
         if (fragment != null) {
             fragment.onDrawerOpened(drawerView);
@@ -163,7 +164,7 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        invalidateOptionsMenu();
+        initializeMenu();
         NavigationFragment fragment = (NavigationFragment) getSupportFragmentManager().findFragmentByTag(NavigationFragment.TAG);
         if (fragment != null) {
             fragment.onDrawerClosed(drawerView);
@@ -216,5 +217,17 @@ public abstract class BaseActivity extends ActionBarActivity implements AppConta
 
     public ExpandableFab getExpandableFab() {
         return mExpandableFab;
+    }
+
+    public void clearMenu() {
+        mMenuIsCleared = true;
+        mMenu.clear();
+    }
+
+    public void initializeMenu() {
+        if (mMenuIsCleared) {
+            invalidateOptionsMenu();
+            mMenuIsCleared = false;
+        }
     }
 }
