@@ -3,13 +3,9 @@ package com.gf.movie.reminder.fragment;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 
@@ -39,12 +35,10 @@ public class GameTrailersFragment extends BaseTrailersFragment implements Callba
         super.onCreate(savedInstanceState);
 
         mTopFragment = new GameTrailerTopDragFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(GameTrailerTopDragFragment.EXTRA_IS_PANEL, true);
+        mTopFragment.setArguments(args);
         mBottomFragment = new GameTrailerBottomDragFragment();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_game_trailers, container, false);
     }
 
     @Override

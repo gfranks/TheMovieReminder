@@ -5,13 +5,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.activity.GameTrailerActivity;
@@ -37,12 +33,10 @@ public class GameRemindersFragment extends BaseRemindersFragment {
         super.onCreate(savedInstanceState);
 
         mTopFragment = new GameTrailerTopDragFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(GameTrailerTopDragFragment.EXTRA_IS_PANEL, true);
+        mTopFragment.setArguments(args);
         mBottomFragment = new GameTrailerBottomDragFragment();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movie_reminders, container, false);
     }
 
     @Override

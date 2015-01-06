@@ -3,13 +3,9 @@ package com.gf.movie.reminder.fragment;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
@@ -35,12 +31,10 @@ public class MovieTrailersFragment extends BaseTrailersFragment implements Callb
         super.onCreate(savedInstanceState);
 
         mTopFragment = new MovieTrailerTopDragFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(MovieTrailerTopDragFragment.EXTRA_IS_PANEL, true);
+        mTopFragment.setArguments(args);
         mBottomFragment = new MovieTrailerBottomDragFragment();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movie_trailers, container, false);
     }
 
     @Override
