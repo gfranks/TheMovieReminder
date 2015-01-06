@@ -20,6 +20,10 @@ import com.gf.movie.reminder.fragment.NavigationFragment;
 import com.gf.movie.reminder.fragment.SignUpFragment;
 import com.gf.movie.reminder.fragment.base.BaseDialogFragment;
 import com.gf.movie.reminder.fragment.base.BaseFragment;
+import com.gf.movie.reminder.fragment.base.BaseRemindersFragment;
+import com.gf.movie.reminder.fragment.base.BaseTrailerBottomDragFragment;
+import com.gf.movie.reminder.fragment.base.BaseTrailerTopDragFragment;
+import com.gf.movie.reminder.fragment.base.BaseTrailersFragment;
 import com.gf.movie.reminder.ui.ForActivity;
 
 import javax.inject.Singleton;
@@ -35,6 +39,10 @@ import dagger.Provides;
                 DeveloperToggleDialogFragment.class,
                 NavigationFragment.class,
                 NavigationListAdapter.class,
+                BaseTrailersFragment.class,
+                BaseTrailerTopDragFragment.class,
+                BaseTrailerBottomDragFragment.class,
+                BaseRemindersFragment.class,
                 MovieRemindersFragment.class,
                 MovieTrailerTopDragFragment.class,
                 MovieTrailerBottomDragFragment.class,

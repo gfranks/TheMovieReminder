@@ -12,14 +12,15 @@ import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.data.model.Game;
-import com.gf.movie.reminder.data.model.GameReminder;
-import com.gf.movie.reminder.fragment.base.BaseFragment;
+import com.gf.movie.reminder.data.model.Reminder;
+import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.fragment.base.BaseTrailerTopDragFragment;
 import com.gf.movie.reminder.ui.Fab;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-public class GameTrailerTopDragFragment extends BaseFragment implements View.OnClickListener {
+public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment implements View.OnClickListener {
 
     public static final String TAG = "game_trailer_top";
 
@@ -54,13 +55,14 @@ public class GameTrailerTopDragFragment extends BaseFragment implements View.OnC
         mGamePlay.setOnClickListener(this);
     }
 
-    public void updateWithReminder(GameReminder reminder) {
+    public void updateWithReminder(Reminder reminder) {
         mGame = (Game) reminder.getTrailer();
         update();
     }
 
-    public void updateWithGame(Game game) {
-        mGame = game;
+    @Override
+    public void updateWithTrailer(Trailer trailer) {
+        mGame = (Game) trailer;
         update();
     }
 
@@ -89,7 +91,8 @@ public class GameTrailerTopDragFragment extends BaseFragment implements View.OnC
             case XBOX_STEAM:
                 setConsoleVisibilities(true, false, true, false);
                 break;
-            case XBOX_PC:setConsoleVisibilities(true, false, false, true);
+            case XBOX_PC:
+                setConsoleVisibilities(true, false, false, true);
                 break;
             case PLAYSTATION:
             case PS3:

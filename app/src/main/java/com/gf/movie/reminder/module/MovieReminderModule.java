@@ -7,6 +7,7 @@ import com.gf.movie.reminder.activity.LogInActivity;
 import com.gf.movie.reminder.activity.MovieReminderActivity;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
 import com.gf.movie.reminder.activity.base.BaseActivity;
+import com.gf.movie.reminder.activity.base.BaseTrailerActivity;
 import com.gf.movie.reminder.application.MovieReminderApplication;
 import com.gf.movie.reminder.module.ui.UiModule;
 
@@ -27,6 +28,7 @@ import dagger.Provides;
         injects = {
                 BaseActivity.class,
                 MovieReminderActivity.class,
+                BaseTrailerActivity.class,
                 MovieTrailerActivity.class,
                 GameTrailerActivity.class,
                 LogInActivity.class

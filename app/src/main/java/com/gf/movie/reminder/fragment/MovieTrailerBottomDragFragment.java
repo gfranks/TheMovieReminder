@@ -10,14 +10,16 @@ import android.widget.TextView;
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminder;
-import com.gf.movie.reminder.fragment.base.BaseFragment;
+import com.gf.movie.reminder.data.model.Reminder;
+import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.fragment.base.BaseTrailerBottomDragFragment;
 import com.gf.movie.reminder.ui.Fab;
 import com.gf.movie.reminder.util.NotificationManager;
 import com.gf.movie.reminder.view.FeedbackBar;
 
 import javax.inject.Inject;
 
-public class MovieTrailerBottomDragFragment extends BaseFragment implements View.OnClickListener {
+public class MovieTrailerBottomDragFragment extends BaseTrailerBottomDragFragment implements View.OnClickListener {
 
     public static final String TAG = "movie_trailer_bottom";
 
@@ -55,15 +57,17 @@ public class MovieTrailerBottomDragFragment extends BaseFragment implements View
         mFab.setOnClickListener(this);
     }
 
-    public void updateWithReminder(MovieReminder reminder) {
-        mReminder = reminder;
+    @Override
+    public void updateWithReminder(Reminder reminder) {
+        mReminder = (MovieReminder) reminder;
         mMovie = (Movie) reminder.getTrailer();
         update();
     }
 
-    public void updateWithMovie(Movie movie) {
+    @Override
+    public void updateWithTrailer(Trailer trailer) {
         mReminder = null;
-        mMovie = movie;
+        mMovie = (Movie) trailer;
         update();
     }
 

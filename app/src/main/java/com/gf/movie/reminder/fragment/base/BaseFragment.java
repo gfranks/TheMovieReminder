@@ -53,4 +53,12 @@ public class BaseFragment extends Fragment {
 
     public void onFabClick() {
     }
+
+    public void clearMenu() {
+        ((BaseActivity) getActivity()).clearMenu();
+    }
+
+    public void initializeMenu() {
+        ((BaseActivity) getActivity()).initializeMenu();
+    }
 }

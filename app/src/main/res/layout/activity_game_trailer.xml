@@ -5,15 +5,15 @@
     android:orientation="vertical">
 
     <fragment
-        android:id="@+id/game_top_fragment"
+        android:id="@+id/trailer_top_fragment"
+        android:name="com.gf.movie.reminder.fragment.GameTrailerTopDragFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/trailer_item_image_height"
-        android:name="com.gf.movie.reminder.fragment.GameTrailerTopDragFragment"/>
+        android:layout_height="@dimen/trailer_item_image_height" />
 
     <fragment
-        android:id="@+id/game_bottom_fragment"
+        android:id="@+id/trailer_bottom_fragment"
+        android:name="com.gf.movie.reminder.fragment.GameTrailerBottomDragFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.gf.movie.reminder.fragment.GameTrailerBottomDragFragment"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

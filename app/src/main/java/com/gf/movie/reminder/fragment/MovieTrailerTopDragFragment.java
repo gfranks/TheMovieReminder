@@ -12,13 +12,14 @@ import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
 import com.gf.movie.reminder.data.model.Movie;
-import com.gf.movie.reminder.data.model.MovieReminder;
-import com.gf.movie.reminder.fragment.base.BaseFragment;
+import com.gf.movie.reminder.data.model.Reminder;
+import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.fragment.base.BaseTrailerTopDragFragment;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
-public class MovieTrailerTopDragFragment extends BaseFragment implements View.OnClickListener {
+public class MovieTrailerTopDragFragment extends BaseTrailerTopDragFragment implements View.OnClickListener {
 
     public static final String TAG = "movie_trailer_top";
 
@@ -44,13 +45,15 @@ public class MovieTrailerTopDragFragment extends BaseFragment implements View.On
         mMoviePlay.setOnClickListener(this);
     }
 
-    public void updateWithReminder(MovieReminder reminder) {
+    @Override
+    public void updateWithReminder(Reminder reminder) {
         mMovie = (Movie) reminder.getTrailer();
         update();
     }
 
-    public void updateWithMovie(Movie movie) {
-        mMovie = movie;
+    @Override
+    public void updateWithTrailer(Trailer trailer) {
+        mMovie = (Movie) trailer;
         update();
     }
 
