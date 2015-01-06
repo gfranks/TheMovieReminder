@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ActionMode;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -38,11 +40,17 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
 
     protected BaseTrailerTopDragFragment mTopFragment;
     protected BaseTrailerBottomDragFragment mBottomFragment;
+    protected ActionMode.Callback mDraggableActionModeCallback = getDraggableActionModeCallback();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_reminders, container, false);
     }
 
     @Override
@@ -80,8 +88,6 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
             mBottomFragment.updateWithReminder(mAdapter.getItem(position));
             mDraggablePanel.setVisibility(View.VISIBLE);
             mDraggablePanel.maximize();
-
-            mActionMode = getToolbar().startActionMode(new DraggableActionModeCallback(mAdapter.getItem(position).getTrailer().getTitle()));
         } else {
             startRemindersActivity(mAdapter.getItem(position));
         }
@@ -118,6 +124,7 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
 
     @Override
     public void onMaximized() {
+        mActionMode = getToolbar().startActionMode(mDraggableActionModeCallback);
         clearMenu();
     }
 
@@ -149,39 +156,39 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
         }
     }
 
+    private ActionMode.Callback getDraggableActionModeCallback() {
+        return new ActionMode.Callback() {
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                getToolbar().setVisibility(View.GONE);
+                mTopFragment.onCreateOptionsMenu(menu, mode.getMenuInflater());
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                mode.setTitle(mTopFragment.getTrailer().getTitle());
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                if (mTopFragment.onOptionsItemSelected(item)) {
+                    mode.finish();
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                getToolbar().setVisibility(View.VISIBLE);
+                mDraggablePanel.minimize();
+            }
+        };
+    }
+
     protected abstract void getReminders();
 
     protected abstract void startRemindersActivity(Reminder reminder);
-
-    protected class DraggableActionModeCallback implements ActionMode.Callback {
-
-        private String mModeTitle;
-
-        public DraggableActionModeCallback(String modeTitle) {
-            mModeTitle = modeTitle;
-        }
-
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            getToolbar().setVisibility(View.GONE);
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            mode.setTitle(mModeTitle);
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            getToolbar().setVisibility(View.VISIBLE);
-            mDraggablePanel.minimize();
-        }
-    }
 }

@@ -27,7 +27,6 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
     @Inject
     Picasso mPicasso;
 
-    private Game mGame;
     private View mGamePlay;
     private ImageView mGameImage;
     private Fab mXboxView;
@@ -55,26 +54,34 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
         mGamePlay.setOnClickListener(this);
     }
 
+    @Override
     public void updateWithReminder(Reminder reminder) {
-        mGame = (Game) reminder.getTrailer();
+        super.updateWithReminder(reminder);
         update();
     }
 
     @Override
     public void updateWithTrailer(Trailer trailer) {
-        mGame = (Game) trailer;
+        super.updateWithTrailer(trailer);
         update();
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == mGamePlay.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mTrailer.getVideoUrl())));
+        }
+    }
+
     private void update() {
-        mPicasso.load(mGame.getImageUrl())
+        mPicasso.load(mTrailer.getImageUrl())
 //                .centerCrop()
                 .placeholder(R.drawable.img_photo_loading_small)
                 .error(R.drawable.img_failed_to_receive_small)
                 .into(mGameImage);
 
         TextView releasedTV = (TextView) getView().findViewById(R.id.trailer_released);
-        if (mGame.isReleased()) {
+        if (mTrailer.isReleased()) {
             releasedTV.setVisibility(View.VISIBLE);
             releasedTV.setText(getString(R.string.trailers_game_released));
         } else {
@@ -82,7 +89,7 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
         }
 
         mXboxView.setVisibility(View.VISIBLE);
-        switch (mGame.getConsole()) {
+        switch (((Game) mTrailer).getConsole()) {
             case XBOX:
             case XBOX_360:
             case XBOX_ONE:
@@ -125,12 +132,5 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
         mPlaystationView.setVisibility(psVis ? View.VISIBLE : View.GONE);
         mSteamView.setVisibility(steamVis ? View.VISIBLE : View.GONE);
         mPCView.setVisibility(pcVis ? View.VISIBLE : View.GONE);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == mGamePlay.getId()) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mGame.getVideoUrl())));
-        }
     }
 }

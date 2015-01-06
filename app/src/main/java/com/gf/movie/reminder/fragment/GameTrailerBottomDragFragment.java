@@ -26,8 +26,6 @@ public class GameTrailerBottomDragFragment extends BaseTrailerBottomDragFragment
     @Inject
     NotificationManager mNotificationManager;
 
-    private Game mGame;
-    private GameReminder mReminder;
     private TextView mGameTitle;
     private TextView mGameReleaseDate;
     private TextView mGameDescription;
@@ -57,29 +55,14 @@ public class GameTrailerBottomDragFragment extends BaseTrailerBottomDragFragment
 
     @Override
     public void updateWithReminder(Reminder reminder) {
-        mReminder = (GameReminder) reminder;
-        mGame = (Game) reminder.getTrailer();
+        super.updateWithReminder(reminder);
         update();
     }
 
     @Override
     public void updateWithTrailer(Trailer trailer) {
-        mReminder = null;
-        mGame = (Game) trailer;
+        super.updateWithTrailer(trailer);
         update();
-    }
-
-    private void update() {
-        mGameTitle.setText(mGame.getTitleString());
-        mGameReleaseDate.setText(mGame.getReleaseDateString());
-        mGameDescription.setText(mGame.getDescription());
-        mGameCompany.setText(mGame.getCompany());
-
-        if (mReminder != null) {
-            mFab.setImageResource(R.drawable.img_reminders_selected);
-        } else {
-            mFab.setImageResource(R.drawable.img_reminders_unselected);
-        }
     }
 
     @Override
@@ -89,21 +72,34 @@ public class GameTrailerBottomDragFragment extends BaseTrailerBottomDragFragment
                 mReminderSet = true;
                 getFeedbackBar().showInfo(R.string.trailers_game_reminder_set, false, FeedbackBar.LENGTH_LONG);
                 if (mReminder != null) {
-                    mNotificationManager.registerNewGameNotification(getActivity().getApplicationContext(), mReminder);
+                    mNotificationManager.registerNewGameReminderNotification(getActivity().getApplicationContext(), (GameReminder) mReminder);
                 } else {
-                    mNotificationManager.registerNewGameNotification(getActivity().getApplicationContext(), mGame);
+                    mNotificationManager.registerNewGameNotification(getActivity().getApplicationContext(), (Game) mTrailer);
                 }
                 mFab.setImageResource(R.drawable.img_reminders_selected);
             } else {
                 if (mReminder != null) {
                     mReminderSet = false;
-                    mNotificationManager.unregisterNewGameNotification(getActivity().getApplicationContext(), mReminder);
+                    mNotificationManager.unregisterNewGameReminderNotification(getActivity().getApplicationContext(), (GameReminder) mReminder);
                     getFeedbackBar().showInfo(R.string.trailers_game_reminder_removed, false, FeedbackBar.LENGTH_LONG);
                     mFab.setImageResource(R.drawable.img_reminders_unselected);
                 } else {
                     getFeedbackBar().showInfo(R.string.trailers_game_reminder_already_set, false, FeedbackBar.LENGTH_LONG);
                 }
             }
+        }
+    }
+
+    private void update() {
+        mGameTitle.setText(mTrailer.getTitleString());
+        mGameReleaseDate.setText(mTrailer.getReleaseDateString());
+        mGameDescription.setText(mTrailer.getDescription());
+        mGameCompany.setText(((Game) mTrailer).getCompany());
+
+        if (mReminder != null) {
+            mFab.setImageResource(R.drawable.img_reminders_selected);
+        } else {
+            mFab.setImageResource(R.drawable.img_reminders_unselected);
         }
     }
 }

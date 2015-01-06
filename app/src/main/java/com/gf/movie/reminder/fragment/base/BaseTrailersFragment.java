@@ -4,10 +4,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.ActionMode;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -51,11 +53,17 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
 
     protected BaseTrailerTopDragFragment mTopFragment;
     protected BaseTrailerBottomDragFragment mBottomFragment;
+    protected ActionMode.Callback mDraggableActionModeCallback = getDraggableActionModeCallback();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_trailers, container, false);
     }
 
     @Override
@@ -101,8 +109,6 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
                 mBottomFragment.updateWithTrailer(mAdapter.getItem(position));
                 mDraggablePanel.setVisibility(View.VISIBLE);
                 mDraggablePanel.maximize();
-
-                mActionMode = getToolbar().startActionMode(new DraggableActionModeCallback(mAdapter.getItem(position).getTitle()));
             } else {
                 startTrailerActivity(mAdapter.getItem(position));
             }
@@ -147,13 +153,14 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
 
     @Override
     public void onMaximized() {
+        mActionMode = getToolbar().startActionMode(mDraggableActionModeCallback);
         getExpandableFab().slideOutFab();
         clearMenu();
     }
 
     @Override
     public void onMinimized() {
-        finishActionMode();
+        mActionMode.finish();
         getActivity().setTitle(getString(R.string.app_name));
         getExpandableFab().slideOutFab();
         initializeMenu();
@@ -176,6 +183,38 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
         initializeMenu();
     }
 
+    private ActionMode.Callback getDraggableActionModeCallback() {
+        return new ActionMode.Callback() {
+
+            @Override
+            public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                getToolbar().setVisibility(View.GONE);
+                mTopFragment.onCreateOptionsMenu(menu, mode.getMenuInflater());
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                mode.setTitle(mTopFragment.getTrailer().getTitle());
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                if (mTopFragment.onOptionsItemSelected(item)) {
+                    mode.finish();
+                }
+                return false;
+            }
+
+            @Override
+            public void onDestroyActionMode(ActionMode mode) {
+                getToolbar().setVisibility(View.VISIBLE);
+                mDraggablePanel.minimize();
+            }
+        };
+    }
+
     protected void finishActionMode() {
         if (mActionMode != null) {
             mActionMode.finish();
@@ -189,36 +228,4 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     }
 
     protected abstract void startTrailerActivity(Trailer trailer);
-
-    protected class DraggableActionModeCallback implements ActionMode.Callback {
-
-        private String mModeTitle;
-
-        public DraggableActionModeCallback(String modeTitle) {
-            mModeTitle = modeTitle;
-        }
-
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            getToolbar().setVisibility(View.GONE);
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            mode.setTitle(mModeTitle);
-            return false;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            getToolbar().setVisibility(View.VISIBLE);
-            mDraggablePanel.minimize();
-        }
-    }
 }

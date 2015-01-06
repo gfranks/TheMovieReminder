@@ -26,8 +26,6 @@ public class MovieTrailerBottomDragFragment extends BaseTrailerBottomDragFragmen
     @Inject
     NotificationManager mNotificationManager;
 
-    private Movie mMovie;
-    private MovieReminder mReminder;
     private TextView mMovieTitle;
     private TextView mMovieReleaseDate;
     private TextView mMovieDescription;
@@ -59,30 +57,14 @@ public class MovieTrailerBottomDragFragment extends BaseTrailerBottomDragFragmen
 
     @Override
     public void updateWithReminder(Reminder reminder) {
-        mReminder = (MovieReminder) reminder;
-        mMovie = (Movie) reminder.getTrailer();
+        super.updateWithReminder(reminder);
         update();
     }
 
     @Override
     public void updateWithTrailer(Trailer trailer) {
-        mReminder = null;
-        mMovie = (Movie) trailer;
+        super.updateWithTrailer(trailer);
         update();
-    }
-
-    private void update() {
-        mMovieTitle.setText(mMovie.getTitleString());
-        mMovieReleaseDate.setText(mMovie.getReleaseDateString());
-        mMovieDescription.setText(mMovie.getDescription());
-        mMovieDirectors.setText(mMovie.getDirectors());
-        mMovieStars.setText(mMovie.getStars());
-
-        if (mReminder != null) {
-            mFab.setImageResource(R.drawable.img_reminders_selected);
-        } else {
-            mFab.setImageResource(R.drawable.img_reminders_unselected);
-        }
     }
 
     @Override
@@ -92,21 +74,35 @@ public class MovieTrailerBottomDragFragment extends BaseTrailerBottomDragFragmen
                 mReminderSet = true;
                 getFeedbackBar().showInfo(R.string.trailers_movie_reminder_set, false, FeedbackBar.LENGTH_LONG);
                 if (mReminder != null) {
-                    mNotificationManager.registerNewMovieNotification(getActivity().getApplicationContext(), mReminder);
+                    mNotificationManager.registerNewMovieReminderNotification(getActivity().getApplicationContext(), (MovieReminder) mReminder);
                 } else {
-                    mNotificationManager.registerNewMovieNotification(getActivity().getApplicationContext(), mMovie);
+                    mNotificationManager.registerNewMovieNotification(getActivity().getApplicationContext(), (Movie) mTrailer);
                 }
                 mFab.setImageResource(R.drawable.img_reminders_selected);
             } else {
                 if (mReminder != null) {
                     mReminderSet = false;
-                    mNotificationManager.unregisterNewMovieNotification(getActivity().getApplicationContext(), mReminder);
+                    mNotificationManager.unregisterNewMovieReminderNotification(getActivity().getApplicationContext(), (MovieReminder) mReminder);
                     getFeedbackBar().showInfo(R.string.trailers_movie_reminder_removed, false, FeedbackBar.LENGTH_LONG);
                     mFab.setImageResource(R.drawable.img_reminders_unselected);
                 } else {
                     getFeedbackBar().showInfo(R.string.trailers_movie_reminder_already_set, false, FeedbackBar.LENGTH_LONG);
                 }
             }
+        }
+    }
+
+    private void update() {
+        mMovieTitle.setText(mTrailer.getTitleString());
+        mMovieReleaseDate.setText(mTrailer.getReleaseDateString());
+        mMovieDescription.setText(mTrailer.getDescription());
+        mMovieDirectors.setText(((Movie) mTrailer).getDirectors());
+        mMovieStars.setText(((Movie) mTrailer).getStars());
+
+        if (mReminder != null) {
+            mFab.setImageResource(R.drawable.img_reminders_selected);
+        } else {
+            mFab.setImageResource(R.drawable.img_reminders_unselected);
         }
     }
 }

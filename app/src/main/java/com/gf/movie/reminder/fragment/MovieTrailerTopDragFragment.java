@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
-import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.Reminder;
 import com.gf.movie.reminder.data.model.Trailer;
 import com.gf.movie.reminder.fragment.base.BaseTrailerTopDragFragment;
@@ -26,7 +25,6 @@ public class MovieTrailerTopDragFragment extends BaseTrailerTopDragFragment impl
     @Inject
     Picasso mPicasso;
 
-    private Movie mMovie;
     private View mMoviePlay;
     private ImageView mMovieImage;
 
@@ -47,36 +45,37 @@ public class MovieTrailerTopDragFragment extends BaseTrailerTopDragFragment impl
 
     @Override
     public void updateWithReminder(Reminder reminder) {
-        mMovie = (Movie) reminder.getTrailer();
+        super.updateWithReminder(reminder);
         update();
     }
 
     @Override
     public void updateWithTrailer(Trailer trailer) {
-        mMovie = (Movie) trailer;
+        super.updateWithTrailer(trailer);
         update();
     }
 
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == mMoviePlay.getId()) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mTrailer.getVideoUrl())));
+        }
+    }
+
     private void update() {
-        mPicasso.load(mMovie.getImageUrl())
+        mPicasso.load(mTrailer.getImageUrl())
 //                .centerCrop()
                 .placeholder(R.drawable.img_photo_loading_small)
                 .error(R.drawable.img_failed_to_receive_small)
                 .into(mMovieImage);
 
         TextView releasedTV = (TextView) getView().findViewById(R.id.trailer_released);
-        if (mMovie.isReleased()) {
+        if (mTrailer.isReleased()) {
             releasedTV.setVisibility(View.VISIBLE);
             releasedTV.setText(getString(R.string.trailers_movie_in_theaters));
         } else {
             releasedTV.setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == mMoviePlay.getId()) {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mMovie.getVideoUrl())));
         }
     }
 }

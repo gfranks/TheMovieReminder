@@ -48,7 +48,7 @@ public class NotificationManager {
         mReminderManager.addReminder(reminder);
     }
 
-    public void registerNewMovieNotification(Context context, MovieReminder reminder) {
+    public void registerNewMovieReminderNotification(Context context, MovieReminder reminder) {
         int id = reminder.getNotificationId();
 
         Intent intent = new Intent(context, ReminderReceiver.class);
@@ -61,7 +61,7 @@ public class NotificationManager {
         mReminderManager.addReminder(reminder);
     }
 
-    public void unregisterNewMovieNotification(Context context, MovieReminder reminder) {
+    public void unregisterNewMovieReminderNotification(Context context, MovieReminder reminder) {
         int id = reminder.getNotificationId();
 
         Intent intent = new Intent(context, ReminderReceiver.class);
@@ -88,7 +88,7 @@ public class NotificationManager {
         mReminderManager.addReminder(reminder);
     }
 
-    public void registerNewGameNotification(Context context, GameReminder reminder) {
+    public void registerNewGameReminderNotification(Context context, GameReminder reminder) {
         int id = reminder.getNotificationId();
 
         Intent intent = new Intent(context, ReminderReceiver.class);
@@ -101,7 +101,7 @@ public class NotificationManager {
         mReminderManager.addReminder(reminder);
     }
 
-    public void unregisterNewGameNotification(Context context, GameReminder reminder) {
+    public void unregisterNewGameReminderNotification(Context context, GameReminder reminder) {
         int id = reminder.getNotificationId();
 
         Intent intent = new Intent(context, ReminderReceiver.class);
