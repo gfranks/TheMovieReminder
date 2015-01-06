@@ -31,28 +31,36 @@
                 android:layout_height="35dp"
                 android:background="@drawable/bg_fab_gray"
                 android:src="@drawable/ic_xbox"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:elevation="@dimen/fab_elevation"
+                android:stateListAnimator="@anim/raise"/>
             <com.gf.movie.reminder.ui.Fab
                 android:id="@+id/game_ps"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_fab_gray"
                 android:src="@drawable/ic_playstation"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:elevation="@dimen/fab_elevation"
+                android:stateListAnimator="@anim/raise"/>
             <com.gf.movie.reminder.ui.Fab
                 android:id="@+id/game_steam"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_fab_gray"
                 android:src="@drawable/ic_steam"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:elevation="@dimen/fab_elevation"
+                android:stateListAnimator="@anim/raise"/>
             <com.gf.movie.reminder.ui.Fab
                 android:id="@+id/game_pc"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:background="@drawable/bg_fab_gray"
                 android:src="@drawable/ic_pc"
-                android:layout_margin="5dp"/>
+                android:layout_margin="5dp"
+                android:elevation="@dimen/fab_elevation"
+                android:stateListAnimator="@anim/raise"/>
 
         </LinearLayout>
 

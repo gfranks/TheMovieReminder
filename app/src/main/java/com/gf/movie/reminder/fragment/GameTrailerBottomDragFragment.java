@@ -29,7 +29,6 @@ public class GameTrailerBottomDragFragment extends BaseFragment implements View.
     private TextView mGameTitle;
     private TextView mGameReleaseDate;
     private TextView mGameDescription;
-    private TextView mGameConsole;
     private TextView mGameCompany;
     private Fab mFab;
 
@@ -47,7 +46,6 @@ public class GameTrailerBottomDragFragment extends BaseFragment implements View.
         mGameTitle = (TextView) view.findViewById(R.id.game_title);
         mGameReleaseDate = (TextView) view.findViewById(R.id.game_release_date);
         mGameDescription = (TextView) view.findViewById(R.id.game_description);
-        mGameConsole = (TextView) view.findViewById(R.id.game_console);
         mGameCompany = (TextView) view.findViewById(R.id.game_company);
 
         mFab = (Fab) view.findViewById(R.id.game_fab);
@@ -71,7 +69,6 @@ public class GameTrailerBottomDragFragment extends BaseFragment implements View.
         mGameTitle.setText(mGame.getTitleString());
         mGameReleaseDate.setText(mGame.getReleaseDateString());
         mGameDescription.setText(mGame.getDescription());
-        mGameConsole.setText(mGame.getConsoleName());
         mGameCompany.setText(mGame.getCompany());
 
         if (mReminder != null) {
