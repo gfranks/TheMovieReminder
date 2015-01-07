@@ -66,6 +66,50 @@
 
         <include layout="@layout/layout_released_view" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/game_xbox"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="2dp"
+                android:background="@null"
+                android:src="@drawable/ic_xbox"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/game_ps"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="2dp"
+                android:background="@null"
+                android:src="@drawable/ic_playstation"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/game_steam"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="2dp"
+                android:background="@null"
+                android:src="@drawable/ic_steam"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/game_pc"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_margin="2dp"
+                android:background="@null"
+                android:src="@drawable/ic_pc"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
         <View
             android:id="@+id/trailer_checked"
             android:layout_width="match_parent"

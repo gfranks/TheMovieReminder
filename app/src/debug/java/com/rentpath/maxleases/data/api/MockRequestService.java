@@ -4,6 +4,7 @@ import com.gf.movie.reminder.data.api.RequestService;
 import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminderSession;
+import com.gf.movie.reminder.data.model.Trailer;
 
 import org.apache.http.HttpStatus;
 
@@ -15,9 +16,10 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit.Callback;
+import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.Body;
-import retrofit.http.Path;
+import retrofit.http.Query;
 
 @Singleton
 public class MockRequestService implements RequestService {
@@ -40,7 +42,36 @@ public class MockRequestService implements RequestService {
         cb.success(session, getMock200Response());
     }
 
-    public void getMovieTrailers(@Path("apiKey") String apiKey, Callback<ArrayList<Movie>> cb) {
+    @Override
+    public void search(@Query("part") final String query, final Callback<ArrayList<Trailer>> cb) {
+        getMovieTrailers(null, new Callback<ArrayList<Movie>>() {
+            @Override
+            public void success(final ArrayList<Movie> movies, Response response) {
+                getGameTrailers(null, new Callback<ArrayList<Game>>() {
+                    @Override
+                    public void success(ArrayList<Game> games, Response response) {
+                        ArrayList<Trailer> trailers = new ArrayList<Trailer>();
+                        trailers.addAll(movies);
+                        trailers.addAll(games);
+                        cb.success(performSearch(query, trailers), getMock200Response());
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        cb.failure(error);
+                    }
+                });
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                cb.failure(error);
+            }
+        });
+    }
+
+    @Override
+    public void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb) {
         ArrayList<Movie> movies = new ArrayList<Movie>();
         movies.add(new Movie("The Interview",
                 "Dave Skylark (James Franco) and his producer Aaron " +
@@ -98,7 +129,7 @@ public class MockRequestService implements RequestService {
     }
 
     @Override
-    public void getGameTrailers(@Path("apiKey") String apiKey, Callback<ArrayList<Game>> cb) {
+    public void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb) {
         ArrayList<Game> games = new ArrayList<Game>();
         games.add(new Game("Grand Theft Auto V",
                 "Rockstar Games' critically acclaimed open world comes to a new generation \n\nEnter the lives of three " +
@@ -165,6 +196,19 @@ public class MockRequestService implements RequestService {
                 "Rockstar Games"));
 
         cb.success(games, getMock200Response());
+    }
+
+    private ArrayList<Trailer> performSearch(String query, ArrayList<Trailer> trailers) {
+        ArrayList<Trailer> filteredTrailers = new ArrayList<Trailer>();
+        query = query.toLowerCase();
+        for (Trailer trailer : trailers) {
+            if (trailer.getTitle().toLowerCase().contains(query) ||
+                    trailer.getReleaseDateString().toLowerCase().startsWith(query)) {
+                filteredTrailers.add(trailer);
+            }
+        }
+
+        return filteredTrailers;
     }
 
     private Response getMock200Response() {

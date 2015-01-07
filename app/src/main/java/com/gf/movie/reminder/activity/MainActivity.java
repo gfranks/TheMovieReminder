@@ -22,7 +22,7 @@ import com.gf.movie.reminder.view.FeedbackBar;
 
 import javax.inject.Inject;
 
-public class MovieReminderActivity extends BaseActivity implements NavigationFragment.OnNavigationItemSelectedListener,
+public class MainActivity extends BaseActivity implements NavigationFragment.OnNavigationItemSelectedListener,
         View.OnClickListener {
 
     private static final String LAST_SELECTED_NAV_ITEM = "last_selected_nav_item";
@@ -33,7 +33,7 @@ public class MovieReminderActivity extends BaseActivity implements NavigationFra
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_reminder);
+        setContentView(R.layout.activity_main);
         addNavigationDrawerComponent();
 
         mExpandableFab.setVisibility(View.VISIBLE);
@@ -62,7 +62,7 @@ public class MovieReminderActivity extends BaseActivity implements NavigationFra
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.movie_reminder_activity, menu);
+        getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
     }
 

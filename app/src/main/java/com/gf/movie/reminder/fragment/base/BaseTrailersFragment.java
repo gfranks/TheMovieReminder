@@ -1,8 +1,12 @@
 package com.gf.movie.reminder.fragment.base;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.SearchView;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +20,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
+import com.gf.movie.reminder.activity.TrailerSearchResultsActivity;
 import com.gf.movie.reminder.adapter.TrailersGridAdapter;
 import com.gf.movie.reminder.data.api.RequestService;
 import com.gf.movie.reminder.data.model.Trailer;
@@ -87,13 +92,22 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
         mDraggablePanel.setTopFragment(mTopFragment);
         mDraggablePanel.setBottomFragment(mBottomFragment);
         mDraggablePanel.initializeView();
-        mDraggablePanel.setVisibility(View.GONE);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_trailers, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(
+                new ComponentName(getActivity(), TrailerSearchResultsActivity.class)));
     }
 
     @Override

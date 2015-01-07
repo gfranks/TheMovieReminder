@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:draggable="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.gf.movie.reminder.view.pulltorefresh.PullToRefreshLayout
-        android:id="@+id/trailers_pull_to_refresh"
+        android:id="@+id/results_pull_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <GridView
-            android:id="@+id/trailers_grid"
+            android:id="@+id/results_grid"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -27,16 +26,5 @@
     </com.gf.movie.reminder.view.pulltorefresh.PullToRefreshLayout>
 
     <include layout="@layout/layout_adapter_empty" />
-
-    <com.github.pedrovgs.DraggablePanel
-        android:id="@+id/trailer_draggable_panel"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:visibility="gone"
-        draggable:top_fragment_height="@dimen/trailer_item_image_height"
-        draggable:top_fragment_margin_bottom="@dimen/list_cell_vertical_padding"
-        draggable:top_fragment_margin_right="@dimen/list_cell_vertical_padding"
-        draggable:x_scale_factor="@dimen/drag_panel_x_scale_factor"
-        draggable:y_scale_factor="@dimen/drag_panel_y_scale_factor" />
 
 </FrameLayout>

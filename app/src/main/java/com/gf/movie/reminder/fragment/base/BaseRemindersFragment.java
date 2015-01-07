@@ -71,7 +71,6 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
         mDraggablePanel.setTopFragment(mTopFragment);
         mDraggablePanel.setBottomFragment(mBottomFragment);
         mDraggablePanel.initializeView();
-        mDraggablePanel.setVisibility(View.GONE);
     }
 
     @Override

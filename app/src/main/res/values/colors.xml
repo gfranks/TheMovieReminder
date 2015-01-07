@@ -10,9 +10,9 @@
     <color name="white">#FFFFFF</color>
 
     <!-- Theme colors -->
-    <color name="theme_accent">@color/theme_red</color>
-    <color name="theme_accent_translucent">@color/theme_red_translucent</color>
-    <color name="theme_accent_dark">@color/theme_red_dark</color>
+    <color name="theme_accent">@color/theme_white</color>
+    <color name="theme_accent_translucent">@color/theme_white_transparent</color>
+    <color name="theme_accent_dark">@color/theme_gray_lighter</color>
     <color name="theme_black">#000000</color>
     <color name="theme_blue">#4787F3</color>
     <color name="theme_blue_translucent">#AA4787F3</color>
@@ -37,5 +37,6 @@
     <color name="theme_red_translucent">#AAD71720</color>
     <color name="theme_red_dark">#CA0814</color>
     <color name="theme_white">#F8F8F2</color>
+    <color name="theme_white_transparent">#DDF8F8F2</color>
 
 </resources>

@@ -88,7 +88,6 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
             releasedTV.setVisibility(View.GONE);
         }
 
-        mXboxView.setVisibility(View.VISIBLE);
         switch (((Game) mTrailer).getConsole()) {
             case XBOX:
             case XBOX_360:

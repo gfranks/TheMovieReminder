@@ -25,6 +25,7 @@
         android:id="@+id/reminders_draggable_panel"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:visibility="gone"
         draggable:top_fragment_height="@dimen/trailer_item_image_height"
         draggable:top_fragment_margin_bottom="@dimen/list_cell_vertical_padding"
         draggable:top_fragment_margin_right="@dimen/list_cell_vertical_padding"

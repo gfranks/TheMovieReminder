@@ -40,6 +40,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_reminders">Remind Me</string>
     <string name="action_search">Search</string>
+    <string name="action_search_hint">Search by title</string>
 
     <!-- NavigationFragment Strings -->
     <string name="nav_movie_trailer">Movie Trailers</string>
@@ -52,12 +53,15 @@
     <string name="dev_toggle_dialog_message">For developer use only.</string>
     <string name="dev_toggle_dialog_success">Developer Settings Enabled</string>
     <string name="dev_toggle_dialog_error">You have not entered the correct developer password.</string>
+    <string name="dev_toggle_dialog_hint">Developer Password</string>
 
     <!-- TrailersFragment Strings -->
     <string name="movie_trailers">Movie Trailers</string>
     <string name="game_trailers">Game Trailers</string>
 
     <string name="trailers_empty_text">There are no trailers to display.</string>
+    <string name="trailers_search_empty_text">Sorry, we could not find what you were looking for.</string>
+    <string name="trailers_select">Select a movie or game you wish to be reminded of upon release.</string>
     <string name="trailers_select_movie">Select a movie you wish to be reminded of upon release.</string>
     <string name="trailers_movie_reminder_set">You will be notified when this movie has been released.</string>
     <string name="trailers_movie_reminders_set">You will be notified when these movies have been released.</string>
