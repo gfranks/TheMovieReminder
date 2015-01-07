@@ -130,21 +130,21 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
     @Override
     public void onMinimized() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setFragmentTitle();
         initializeMenu();
     }
 
     @Override
     public void onClosedToLeft() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setFragmentTitle();
         initializeMenu();
     }
 
     @Override
     public void onClosedToRight() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setFragmentTitle();
         initializeMenu();
     }
 
@@ -190,4 +190,6 @@ public abstract class BaseRemindersFragment extends BaseFragment implements Adap
     protected abstract void getReminders();
 
     protected abstract void startRemindersActivity(Reminder reminder);
+
+    protected abstract void setFragmentTitle();
 }

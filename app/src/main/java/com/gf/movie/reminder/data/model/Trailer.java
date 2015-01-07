@@ -97,13 +97,21 @@ public class Trailer implements Parcelable {
     }
 
     public String getTitleString() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy");
-        return mTitle + " (" + format.format(mReleaseDate) + ")";
+        if (mReleaseDate != null) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy");
+            return mTitle + " (" + format.format(mReleaseDate) + ")";
+        }
+
+        return mTitle;
     }
 
     public String getReleaseDateString() {
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        return format.format(mReleaseDate);
+        if (mReleaseDate != null) {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            return format.format(mReleaseDate);
+        }
+
+        return "N/A";
     }
 
     public String getReleaseCellString(Context context) {
@@ -111,7 +119,11 @@ public class Trailer implements Parcelable {
     }
 
     public boolean isReleased() {
-        return getReleaseDate().before(new Date());
+        if (mReleaseDate != null) {
+            return mReleaseDate.before(new Date());
+        }
+
+        return false;
     }
 
     @Override
@@ -125,7 +137,7 @@ public class Trailer implements Parcelable {
         out.writeString(mDescription);
         out.writeString(mImageUrl);
         out.writeString(mVideoUrl);
-        out.writeLong(mReleaseDate.getTime());
+        out.writeLong(mReleaseDate != null ? mReleaseDate.getTime() : -1);
         out.writeInt(mType.ordinal());
     }
 
@@ -134,7 +146,10 @@ public class Trailer implements Parcelable {
         mDescription = in.readString();
         mImageUrl = in.readString();
         mVideoUrl = in.readString();
-        mReleaseDate = new Date(in.readLong());
+        long releaseDateLong = in.readLong();
+        if (releaseDateLong != -1) {
+            mReleaseDate = new Date(releaseDateLong);
+        }
         mType = Type.values()[in.readInt()];
     }
 
@@ -152,7 +167,10 @@ public class Trailer implements Parcelable {
             mDescription = json.getString("description");
             mImageUrl = json.getString("image_url");
             mVideoUrl = json.getString("video_url");
-            mReleaseDate = new Date(json.getLong("release_date"));
+            long releaseDateLong = json.getLong("release_date");
+            if (releaseDateLong != -1) {
+                mReleaseDate = new Date(releaseDateLong);
+            }
             mType = Type.values()[json.getInt("type")];
         } catch (Throwable t) {
             t.printStackTrace();
@@ -169,13 +187,13 @@ public class Trailer implements Parcelable {
         json.put("description", getDescription());
         json.put("image_url", getImageUrl());
         json.put("video_url", getVideoUrl());
-        json.put("release_date", getReleaseDate().getTime());
+        json.put("release_date", getReleaseDate() != null ? getReleaseDate().getTime() : -1);
         json.put("type", mType.ordinal());
         return json;
     }
 
     public enum Type {
         GAME,
-        MOVIE;
+        MOVIE
     }
 }

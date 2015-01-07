@@ -1,8 +1,14 @@
 package com.gf.movie.reminder.module;
 
 import com.gf.movie.reminder.BuildConfig;
+import com.gf.movie.reminder.data.adapter.GameResponseTypeAdapter;
+import com.gf.movie.reminder.data.adapter.MovieResponseTypeAdapter;
+import com.gf.movie.reminder.data.adapter.TrailerResponseTypeAdapter;
 import com.gf.movie.reminder.data.api.ApiHeaders;
 import com.gf.movie.reminder.data.api.RequestService;
+import com.gf.movie.reminder.data.model.YoutubeGameResponse;
+import com.gf.movie.reminder.data.model.YoutubeMovieResponse;
+import com.gf.movie.reminder.data.model.YoutubeTrailerResponse;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
@@ -54,10 +60,13 @@ public class ApiModule {
                 .setConverter(
                         new GsonConverter(
                                 new GsonBuilder()
-                                        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                                        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-                                        .serializeNulls()
-                                        .create()))
+                                    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                                    .serializeNulls()
+                                    .registerTypeAdapter(YoutubeTrailerResponse.class, new TrailerResponseTypeAdapter())
+                                    .registerTypeAdapter(YoutubeMovieResponse.class, new MovieResponseTypeAdapter())
+                                    .registerTypeAdapter(YoutubeGameResponse.class, new GameResponseTypeAdapter())
+                                    .create()))
                 .setLogLevel(logLevel)
                 .build();
     }

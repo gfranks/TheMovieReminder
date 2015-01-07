@@ -8,8 +8,14 @@ android {
     final URL_PROD = "http://www.google.com"
     final URL_QA = "http://www.google.com"
 
-    final API_URL_PROD = "http://api.rottentomatoes.com/api/public/v1.0"
-    final API_URL_QA = "http://api.rottentomatoes.com/api/public/v1.0"
+    final YOUTUBE_API_URL_PROD = "https://www.googleapis.com/youtube/v3"
+    final YOUTUBE_API_URL_QA = "https://www.googleapis.com/youtube/v3"
+
+    final RT_API_URL_PROD = "http://api.rottentomatoes.com/api/public/v1.0"
+    final RT_API_URL_QA = "http://api.rottentomatoes.com/api/public/v1.0"
+
+    final API_URL_PROD = YOUTUBE_API_URL_PROD
+    final API_URL_QA = YOUTUBE_API_URL_QA
 
     compileSdkVersion 21
     buildToolsVersion "21.1.2"

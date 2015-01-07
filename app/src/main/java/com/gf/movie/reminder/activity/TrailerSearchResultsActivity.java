@@ -22,6 +22,7 @@ import com.gf.movie.reminder.data.api.RequestService;
 import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.data.model.YoutubeTrailerResponse;
 import com.gf.movie.reminder.util.NotificationManager;
 import com.gf.movie.reminder.util.Utils;
 import com.gf.movie.reminder.view.FeedbackBar;
@@ -36,7 +37,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class TrailerSearchResultsActivity extends BaseActivity implements Callback<ArrayList<Trailer>>,
+public class TrailerSearchResultsActivity extends BaseActivity implements Callback<YoutubeTrailerResponse>,
         AdapterView.OnItemClickListener, AbsListView.MultiChoiceModeListener, PullToRefreshLayout.OnRefreshListener,
         View.OnClickListener {
 
@@ -89,17 +90,17 @@ public class TrailerSearchResultsActivity extends BaseActivity implements Callba
     }
 
     @Override
-    public void success(ArrayList<Trailer> trailers, Response response) {
+    public void success(YoutubeTrailerResponse youtubeResponse, Response response) {
         mPullToRefreshLayout.setRefreshing(false);
         if (mAdapter == null) {
-            mAdapter = new TrailersGridAdapter(this, trailers, mPicasso);
+            mAdapter = new TrailersGridAdapter(this, youtubeResponse.getTrailers(), mPicasso);
             mGrid.setAdapter(mAdapter);
 
         } else {
-            mAdapter.setTrailers(trailers);
+            mAdapter.setTrailers(youtubeResponse.getTrailers());
         }
 
-        if (trailers.size() > 0) {
+        if (youtubeResponse.getTrailers().size() > 0) {
             mExpandableFab.slideInFab();
         } else {
             mExpandableFab.slideOutFab();
@@ -181,12 +182,13 @@ public class TrailerSearchResultsActivity extends BaseActivity implements Callba
 
     @Override
     public void onRefresh() {
-        mRequestService.search(mSearchQuery, this);
+        mRequestService.search(getString(R.string.google_api_key), mSearchQuery, this);
     }
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             mSearchQuery = intent.getStringExtra(SearchManager.QUERY);
+            setTitle(String.format(getString(R.string.trailer_search_results_title), mSearchQuery));
             onRefresh();
         }
     }

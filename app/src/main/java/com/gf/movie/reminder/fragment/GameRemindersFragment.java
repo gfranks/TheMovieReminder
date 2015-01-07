@@ -102,4 +102,9 @@ public class GameRemindersFragment extends BaseRemindersFragment {
             startActivity(intent);
         }
     }
+
+    @Override
+    protected void setFragmentTitle() {
+        getActivity().setTitle(R.string.game_reminders);
+    }
 }

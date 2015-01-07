@@ -14,6 +14,7 @@ import com.gf.movie.reminder.activity.GameTrailerActivity;
 import com.gf.movie.reminder.adapter.TrailersGridAdapter;
 import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.data.model.YoutubeGameResponse;
 import com.gf.movie.reminder.fragment.base.BaseTrailersFragment;
 import com.gf.movie.reminder.util.Utils;
 import com.gf.movie.reminder.view.FeedbackBar;
@@ -25,7 +26,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class GameTrailersFragment extends BaseTrailersFragment implements Callback<ArrayList<Game>>,
+public class GameTrailersFragment extends BaseTrailersFragment implements Callback<YoutubeGameResponse>,
         AdapterView.OnItemClickListener, AbsListView.MultiChoiceModeListener, PullToRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "game_trailers";
@@ -59,13 +60,13 @@ public class GameTrailersFragment extends BaseTrailersFragment implements Callba
     }
 
     @Override
-    public void success(ArrayList<Game> games, Response response) {
+    public void success(YoutubeGameResponse youtubeResponse, Response response) {
         mPullToRefreshLayout.setRefreshing(false);
         if (mAdapter == null) {
-            mAdapter = new TrailersGridAdapter(getActivity(), games, mPicasso);
+            mAdapter = new TrailersGridAdapter(getActivity(), youtubeResponse.getTrailers(), mPicasso);
             mGrid.setAdapter(mAdapter);
         } else {
-            mAdapter.setTrailers(games);
+            mAdapter.setTrailers(youtubeResponse.getTrailers());
         }
     }
 
@@ -123,5 +124,10 @@ public class GameTrailersFragment extends BaseTrailersFragment implements Callba
         super.didSelectTrailerForReminder(trailer);
         getFeedbackBar().showInfo(R.string.trailers_game_reminder_set, false, FeedbackBar.LENGTH_LONG);
         mNotificationManager.registerNewGameNotification(getActivity().getApplicationContext(), (Game) trailer);
+    }
+
+    @Override
+    protected void setFragmentTitle() {
+        getActivity().setTitle(R.string.game_trailers);
     }
 }

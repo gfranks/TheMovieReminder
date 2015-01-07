@@ -24,11 +24,7 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
 
     public static final String TAG = "game_trailer_top";
 
-    @Inject
-    Picasso mPicasso;
-
     private View mGamePlay;
-    private ImageView mGameImage;
     private Fab mXboxView;
     private Fab mPlaystationView;
     private Fab mSteamView;
@@ -44,7 +40,7 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
         super.onViewCreated(view, savedInstanceState);
 
         mGamePlay = view.findViewById(R.id.game_play);
-        mGameImage = (ImageView) view.findViewById(R.id.game_image_url);
+        mTrailerImage = (ImageView) view.findViewById(R.id.game_image_url);
 
         mXboxView = (Fab) view.findViewById(R.id.game_xbox);
         mPlaystationView = (Fab) view.findViewById(R.id.game_ps);
@@ -73,12 +69,9 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
         }
     }
 
-    private void update() {
-        mPicasso.load(mTrailer.getImageUrl())
-//                .centerCrop()
-                .placeholder(R.drawable.img_photo_loading_small)
-                .error(R.drawable.img_failed_to_receive_small)
-                .into(mGameImage);
+    @Override
+    protected void update() {
+        super.update();
 
         TextView releasedTV = (TextView) getView().findViewById(R.id.trailer_released);
         if (mTrailer.isReleased()) {
@@ -123,6 +116,8 @@ public class GameTrailerTopDragFragment extends BaseTrailerTopDragFragment imple
             case ALL:
                 setConsoleVisibilities(true, true, true, true);
                 break;
+            case NONE:
+                setConsoleVisibilities(false, false, false, false);
         }
     }
 

@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
+import com.gf.movie.reminder.data.model.Game;
+import com.gf.movie.reminder.data.model.GameReminder;
 import com.gf.movie.reminder.data.model.Reminder;
 import com.squareup.picasso.Picasso;
 
@@ -60,8 +62,8 @@ public class RemindersGridAdapter extends GridSelectionAdapter {
         TextView tv3 = (TextView) convertView.findViewById(R.id.trailer_released);
 
         mPicasso.load(reminder.getTrailer().getImageUrl())
-                .resize(200, 250)
-//                .centerCrop()
+                .resize(250, 350)
+                .centerCrop()
                 .placeholder(R.drawable.img_photo_loading_small)
                 .error(R.drawable.img_failed_to_receive_small)
                 .into(iv);
@@ -75,6 +77,15 @@ public class RemindersGridAdapter extends GridSelectionAdapter {
             tv3.setVisibility(View.GONE);
         }
 
+        if (reminder instanceof GameReminder) {
+            setupGameConsoles(convertView, (Game) (reminder.getTrailer()));
+        } else {
+            convertView.findViewById(R.id.game_xbox).setVisibility(View.GONE);
+            convertView.findViewById(R.id.game_ps).setVisibility(View.GONE);
+            convertView.findViewById(R.id.game_steam).setVisibility(View.GONE);
+            convertView.findViewById(R.id.game_pc).setVisibility(View.GONE);
+        }
+
         if (isSelected(position)) {
             convertView.findViewById(R.id.reminder_checked).setVisibility(View.VISIBLE);
         } else {
@@ -82,6 +93,55 @@ public class RemindersGridAdapter extends GridSelectionAdapter {
         }
 
         return convertView;
+    }
+
+    private void setupGameConsoles(View view, Game game) {
+        switch (game.getConsole()) {
+            case XBOX:
+            case XBOX_360:
+            case XBOX_ONE:
+                setConsoleVisibilities(view, true, false, false, false);
+                break;
+            case XBOX_STEAM:
+                setConsoleVisibilities(view, true, false, true, false);
+                break;
+            case XBOX_PC:
+                setConsoleVisibilities(view, true, false, false, true);
+                break;
+            case PLAYSTATION:
+            case PS3:
+            case PS4:
+                setConsoleVisibilities(view, false, true, false, false);
+                break;
+            case PLAYSTATION_XBOX:
+                setConsoleVisibilities(view, true, true, false, false);
+                break;
+            case PLAYSTATION_STEAM:
+                setConsoleVisibilities(view, false, true, true, false);
+                break;
+            case PLAYSTATION_PC:
+                setConsoleVisibilities(view, false, true, false, true);
+                break;
+            case STEAM:
+                setConsoleVisibilities(view, false, false, true, false);
+                break;
+            case PC:
+                setConsoleVisibilities(view, false, false, false, true);
+                break;
+            case ALL:
+                setConsoleVisibilities(view, true, true, true, true);
+                break;
+            case NONE:
+                setConsoleVisibilities(view, false, false, false, false);
+                break;
+        }
+    }
+
+    private void setConsoleVisibilities(View view, boolean xboxVis, boolean psVis, boolean steamVis, boolean pcVis) {
+        view.findViewById(R.id.game_xbox).setVisibility(xboxVis ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.game_ps).setVisibility(psVis ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.game_steam).setVisibility(steamVis ? View.VISIBLE : View.GONE);
+        view.findViewById(R.id.game_pc).setVisibility(pcVis ? View.VISIBLE : View.GONE);
     }
 
     @Override

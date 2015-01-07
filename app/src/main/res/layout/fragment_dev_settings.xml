@@ -1,310 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/theme_gray_transparent"
-    android:columnCount="2"
-    android:padding="12dp"
-    android:stretchColumns="0"
-    tools:ignore="UselessParent">
+    android:layout_height="match_parent">
 
+    <TableLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme_gray_transparent"
+        android:columnCount="2"
+        android:padding="12dp"
+        android:stretchColumns="0"
+        tools:ignore="UselessParent">
 
-    <TableRow>
-
-        <LinearLayout
-            android:layout_gravity="right"
-            android:layout_span="2"
-            android:orientation="horizontal">
+        <TableRow>
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical|right"
-                android:orientation="vertical">
+                android:layout_gravity="end"
+                android:layout_span="2"
+                android:orientation="horizontal">
 
-                <TextView
-                    style="@style/DebugInfoTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/app_name" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|end"
+                    android:orientation="vertical">
 
-                <TextView
-                    style="@style/DebugInfoTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/development_settings" />
+                    <TextView
+                        style="@style/DebugInfoTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/app_name" />
 
+                    <TextView
+                        style="@style/DebugInfoTextStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/development_settings" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_launcher" />
             </LinearLayout>
+        </TableRow>
 
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_launcher" />
-        </LinearLayout>
-    </TableRow>
+        <!-- NETWORK SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <!-- NETWORK SECTION -->
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:text="@string/network_information" />
+        </TableRow>
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:text="@string/network_information" />
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:layout_gravity="start|end|center_vertical"
+                android:text="@string/logging" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:layout_gravity="start|end|center_vertical"
-            android:text="@string/logging" />
+            <Spinner
+                android:id="@+id/dev_network_logging"
+                style="@style/DebugSpinnerItemStyle"
+                android:layout_gravity="end|center_vertical" />
 
-        <Spinner
-            android:id="@+id/dev_network_logging"
-            style="@style/DebugSpinnerItemStyle"
-            android:layout_gravity="end|center_vertical" />
+        </TableRow>
 
-    </TableRow>
+        <!-- IMAGES SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <!-- IMAGES SECTION -->
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:layout_gravity="start|end"
+                android:layout_span="2"
+                android:text="@string/images" />
+        </TableRow>
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:layout_gravity="start|end"
-            android:layout_span="2"
-            android:text="@string/images" />
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:layout_gravity="start|center_vertical"
+                android:text="@string/logging" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:layout_gravity="start|center_vertical"
-            android:text="@string/logging" />
+            <Spinner
+                android:id="@+id/dev_images_logging"
+                style="@style/DebugSpinnerItemStyle"
+                android:layout_gravity="end|center_vertical" />
 
-        <Spinner
-            android:id="@+id/dev_images_logging"
-            style="@style/DebugSpinnerItemStyle"
-            android:layout_gravity="end|center_vertical" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:layout_gravity="start|center_vertical"
+                android:text="@string/image_indicators" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:layout_gravity="start|center_vertical"
-            android:text="@string/image_indicators" />
+            <Spinner
+                android:id="@+id/dev_images_indicators"
+                style="@style/DebugSpinnerItemStyle"
+                android:layout_gravity="end|center_vertical" />
 
-        <Spinner
-            android:id="@+id/dev_images_indicators"
-            style="@style/DebugSpinnerItemStyle"
-            android:layout_gravity="end|center_vertical" />
+        </TableRow>
 
-    </TableRow>
+        <!-- ANIMATION SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <!-- ANIMATION SECTION -->
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:text="@string/transition_animation" />
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:text="@string/transition_animation" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:layout_gravity="start|end|center_vertical"
+                android:text="@string/enabled" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:layout_gravity="start|end|center_vertical"
-            android:text="@string/enabled" />
+            <CheckBox android:id="@+id/dev_transition_animation" />
 
-        <CheckBox android:id="@+id/dev_transition_animation" />
+        </TableRow>
 
-    </TableRow>
+        <!-- DRAWERLAYOUT BLUR SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <!-- DRAWERLAYOUT BLUR SECTION -->
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:layout_gravity="start|end"
+                android:layout_span="2"
+                android:text="@string/drawer_layout" />
+        </TableRow>
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:layout_gravity="start|end"
-            android:layout_span="2"
-            android:text="@string/drawer_layout" />
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:layout_gravity="start|center_vertical"
+                android:text="@string/blur_enabled" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:layout_gravity="start|center_vertical"
-            android:text="@string/blur_enabled" />
+            <CheckBox android:id="@+id/dev_drawer_layout_blur" />
 
-        <CheckBox android:id="@+id/dev_drawer_layout_blur" />
+        </TableRow>
 
-    </TableRow>
+        <!-- ADDITIONAL SETTINGS SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <!-- ADDITIONAL SETTINGS SECTION -->
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:layout_gravity="start|end"
+                android:layout_span="2"
+                android:text="@string/additional" />
+        </TableRow>
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:layout_gravity="start|end"
-            android:layout_span="2"
-            android:text="@string/additional" />
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:layout_gravity="start|center_vertical"
+                android:text="@string/tailer_panel" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:layout_gravity="start|center_vertical"
-            android:text="@string/tailer_panel" />
+            <CheckBox android:id="@+id/dev_trailer_panel" />
 
-        <CheckBox android:id="@+id/dev_trailer_panel" />
+        </TableRow>
 
-    </TableRow>
+        <!-- BUILD INFORMATION SECTION -->
 
-    <!-- BUILD INFORMATION SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:text="@string/build_information" />
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:text="@string/build_information" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/name" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/name" />
+            <TextView
+                android:id="@+id/dev_build_name"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_build_name"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/code" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/code" />
+            <TextView
+                android:id="@+id/dev_build_code"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_build_code"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/sha" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/sha" />
+            <TextView
+                android:id="@+id/dev_build_sha"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_build_sha"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/date" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/date" />
+            <TextView
+                android:id="@+id/dev_build_date"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_build_date"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <!-- DEVICE INFORMATION SECTION -->
+        <TableRow android:layout_marginTop="10dp">
 
-    <!-- DEVICE INFORMATION SECTION -->
-    <TableRow android:layout_marginTop="10dp">
+            <TextView
+                style="@style/DebugInfoHeaderTextStyle"
+                android:text="@string/information" />
 
-        <TextView
-            style="@style/DebugInfoHeaderTextStyle"
-            android:text="@string/information" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/make" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/make" />
+            <TextView
+                android:id="@+id/dev_device_make"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_device_make"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/model" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/model" />
+            <TextView
+                android:id="@+id/dev_device_model"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_device_model"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/resolution" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/resolution" />
+            <TextView
+                android:id="@+id/dev_device_resolution"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_device_resolution"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/density" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/density" />
+            <TextView
+                android:id="@+id/dev_device_density"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_device_density"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/release" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/release" />
+            <TextView
+                android:id="@+id/dev_device_release"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_device_release"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
+        <TableRow>
 
-    <TableRow>
+            <TextView
+                style="@style/DebugInfoDetailTextStyle"
+                android:text="@string/api" />
 
-        <TextView
-            style="@style/DebugInfoDetailTextStyle"
-            android:text="@string/api" />
+            <TextView
+                android:id="@+id/dev_device_api"
+                style="@style/DebugInfoDetailTextStyle" />
 
-        <TextView
-            android:id="@+id/dev_device_api"
-            style="@style/DebugInfoDetailTextStyle" />
+        </TableRow>
 
-    </TableRow>
-</TableLayout>
+    </TableLayout>
+
+</ScrollView>
