@@ -25,12 +25,12 @@ public interface RequestService {
                   Callback<MovieReminderSession> cb);
 
     @GET("/search?part=snippet&type=video&videoCaption=closedCaption")
-    void search(@Query("q") String query, Callback<ArrayList<Trailer>> cb);
+    void search(@Query("key") String apiKey, @Query("q") String query, Callback<ArrayList<Trailer>> cb);
 
-    @GET("/search?part=snippet&q=trailers&type=video&videoCaption=closedCaption")
+    @GET("/search?part=snippet&q=movie%20trailers&type=video&videoCaption=closedCaption")
     void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb);
 
-    @GET("/search?part=snippet&q=trailers&type=video&videoCaption=closedCaption")
+    @GET("/search?part=snippet&q=video%20game%20trailers&type=video&videoCaption=closedCaption")
     void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb);
 
 //    @POST("/api/auth/exchange/")

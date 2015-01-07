@@ -181,7 +181,7 @@ public class TrailerSearchResultsActivity extends BaseActivity implements Callba
 
     @Override
     public void onRefresh() {
-        mRequestService.search(mSearchQuery, this);
+        mRequestService.search(getString(R.string.google_api_key), mSearchQuery, this);
     }
 
     private void handleIntent(Intent intent) {

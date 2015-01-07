@@ -10,7 +10,9 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.gf.movie.reminder.R;
+import com.gf.movie.reminder.activity.GameTrailerActivity;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
+import com.gf.movie.reminder.data.model.MovieReminder;
 import com.gf.movie.reminder.data.model.Reminder;
 
 import java.io.IOException;
@@ -24,7 +26,12 @@ public class ReminderReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent receivedIntent) {
         Reminder reminder = receivedIntent.getParcelableExtra(NotificationManager.EXTRA_MOVIE_REMINDER);
 
-        Intent intent = new Intent(context, MovieTrailerActivity.class);
+        Intent intent;
+        if (reminder instanceof MovieReminder) {
+            intent = new Intent(context, MovieTrailerActivity.class);
+        } else {
+            intent = new Intent(context, GameTrailerActivity.class);
+        }
         intent.putExtras(receivedIntent.getExtras());
         intent.putExtra(MovieTrailerActivity.EXTRA_NOTIFICATION, true);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);

@@ -2,7 +2,8 @@
 
     <string name="app_name">The Movie Reminder</string>
 
-    <string name="google_api_key">AIzaSyDXgi7oB6c-5OVH7u5kW9JoIFz1i6d1zOg</string>
+    <!--<string name="google_api_key">AIzaSyDXgi7oB6c-5OVH7u5kW9JoIFz1i6d1zOg</string>-->
+    <string name="google_api_key">AIzaSyAUJIvqDrZM2FBBObtqxLcpxQyybDAMkz4</string>
     <string name="rotten_tomatoes_key">9n5ke6xn9kmkjqq3mqnqqtuq</string>
 
     <string name="drawer_open">Open navigation drawer</string>

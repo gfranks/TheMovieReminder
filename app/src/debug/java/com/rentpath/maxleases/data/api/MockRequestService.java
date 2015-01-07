@@ -43,35 +43,37 @@ public class MockRequestService implements RequestService {
     }
 
     @Override
-    public void search(@Query("part") final String query, final Callback<ArrayList<Trailer>> cb) {
-        getMovieTrailers(null, new Callback<ArrayList<Movie>>() {
-            @Override
-            public void success(final ArrayList<Movie> movies, Response response) {
-                getGameTrailers(null, new Callback<ArrayList<Game>>() {
-                    @Override
-                    public void success(ArrayList<Game> games, Response response) {
-                        ArrayList<Trailer> trailers = new ArrayList<Trailer>();
-                        trailers.addAll(movies);
-                        trailers.addAll(games);
-                        cb.success(performSearch(query, trailers), getMock200Response());
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        cb.failure(error);
-                    }
-                });
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                cb.failure(error);
-            }
-        });
+    public void search(@Query("key") String apiKey, @Query("part") final String query, final Callback<ArrayList<Trailer>> cb) {
+        ArrayList<Trailer> trailers = new ArrayList<Trailer>();
+        trailers.addAll(getMockMovies());
+        trailers.addAll(getMockGames());
+        cb.success(performSearch(query, trailers), getMock200Response());
     }
 
     @Override
     public void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb) {
+        cb.success(getMockMovies(), getMock200Response());
+    }
+
+    @Override
+    public void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb) {
+        cb.success(getMockGames(), getMock200Response());
+    }
+
+    private ArrayList<Trailer> performSearch(String query, ArrayList<Trailer> trailers) {
+        ArrayList<Trailer> filteredTrailers = new ArrayList<Trailer>();
+        query = query.toLowerCase();
+        for (Trailer trailer : trailers) {
+            if (trailer.getTitle().toLowerCase().contains(query) ||
+                    trailer.getReleaseDateString().toLowerCase().startsWith(query)) {
+                filteredTrailers.add(trailer);
+            }
+        }
+
+        return filteredTrailers;
+    }
+
+    private ArrayList<Movie> getMockMovies() {
         ArrayList<Movie> movies = new ArrayList<Movie>();
         movies.add(new Movie("The Interview",
                 "Dave Skylark (James Franco) and his producer Aaron " +
@@ -125,11 +127,10 @@ public class MockRequestService implements RequestService {
                 "Christopher Nolan",
                 "Matthew McConaughey, Anne Hathaway, Jessica Chastain, Mackenzie Foy"));
 
-        cb.success(movies, getMock200Response());
+        return movies;
     }
 
-    @Override
-    public void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb) {
+    private ArrayList<Game> getMockGames() {
         ArrayList<Game> games = new ArrayList<Game>();
         games.add(new Game("Grand Theft Auto V",
                 "Rockstar Games' critically acclaimed open world comes to a new generation \n\nEnter the lives of three " +
@@ -195,20 +196,7 @@ public class MockRequestService implements RequestService {
                 Game.Console.STEAM,
                 "Rockstar Games"));
 
-        cb.success(games, getMock200Response());
-    }
-
-    private ArrayList<Trailer> performSearch(String query, ArrayList<Trailer> trailers) {
-        ArrayList<Trailer> filteredTrailers = new ArrayList<Trailer>();
-        query = query.toLowerCase();
-        for (Trailer trailer : trailers) {
-            if (trailer.getTitle().toLowerCase().contains(query) ||
-                    trailer.getReleaseDateString().toLowerCase().startsWith(query)) {
-                filteredTrailers.add(trailer);
-            }
-        }
-
-        return filteredTrailers;
+        return games;
     }
 
     private Response getMock200Response() {
