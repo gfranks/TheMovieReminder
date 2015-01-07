@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.gf.movie.reminder.activity.GameTrailerActivity;
 import com.gf.movie.reminder.activity.LogInActivity;
-import com.gf.movie.reminder.activity.MovieReminderActivity;
+import com.gf.movie.reminder.activity.MainActivity;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
 import com.gf.movie.reminder.activity.TrailerSearchResultsActivity;
 import com.gf.movie.reminder.activity.base.BaseActivity;
@@ -28,7 +28,7 @@ import dagger.Provides;
         },
         injects = {
                 BaseActivity.class,
-                MovieReminderActivity.class,
+                MainActivity.class,
                 BaseTrailerActivity.class,
                 MovieTrailerActivity.class,
                 GameTrailerActivity.class,

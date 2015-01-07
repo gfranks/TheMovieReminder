@@ -61,6 +61,7 @@
 
     <string name="trailers_empty_text">There are no trailers to display.</string>
     <string name="trailers_search_empty_text">Sorry, we could not find what you were looking for.</string>
+    <string name="trailers_select">Select a movie or game you wish to be reminded of upon release.</string>
     <string name="trailers_select_movie">Select a movie you wish to be reminded of upon release.</string>
     <string name="trailers_movie_reminder_set">You will be notified when this movie has been released.</string>
     <string name="trailers_movie_reminders_set">You will be notified when these movies have been released.</string>

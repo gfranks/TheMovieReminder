@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import retrofit.Callback;
+import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.http.Body;
 import retrofit.http.Query;
@@ -42,8 +43,31 @@ public class MockRequestService implements RequestService {
     }
 
     @Override
-    public void search(@Query("part") String query, Callback<ArrayList<Trailer>> cb) {
+    public void search(@Query("part") final String query, final Callback<ArrayList<Trailer>> cb) {
+        getMovieTrailers(null, new Callback<ArrayList<Movie>>() {
+            @Override
+            public void success(final ArrayList<Movie> movies, Response response) {
+                getGameTrailers(null, new Callback<ArrayList<Game>>() {
+                    @Override
+                    public void success(ArrayList<Game> games, Response response) {
+                        ArrayList<Trailer> trailers = new ArrayList<Trailer>();
+                        trailers.addAll(movies);
+                        trailers.addAll(games);
+                        cb.success(performSearch(query, trailers), getMock200Response());
+                    }
 
+                    @Override
+                    public void failure(RetrofitError error) {
+                        cb.failure(error);
+                    }
+                });
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                cb.failure(error);
+            }
+        });
     }
 
     @Override
@@ -172,6 +196,19 @@ public class MockRequestService implements RequestService {
                 "Rockstar Games"));
 
         cb.success(games, getMock200Response());
+    }
+
+    private ArrayList<Trailer> performSearch(String query, ArrayList<Trailer> trailers) {
+        ArrayList<Trailer> filteredTrailers = new ArrayList<Trailer>();
+        query = query.toLowerCase();
+        for (Trailer trailer : trailers) {
+            if (trailer.getTitle().toLowerCase().contains(query) ||
+                    trailer.getReleaseDateString().toLowerCase().startsWith(query)) {
+                filteredTrailers.add(trailer);
+            }
+        }
+
+        return filteredTrailers;
     }
 
     private Response getMock200Response() {

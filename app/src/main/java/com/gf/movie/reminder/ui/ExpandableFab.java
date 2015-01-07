@@ -40,6 +40,8 @@ public class ExpandableFab extends FrameLayout {
     private OnFabOptionClickListener mListener;
     private OnClickListener mOnFabClickListenerDelegate;
 
+    private boolean mIsSlidOut;
+
     public ExpandableFab(Context context) {
         super(context);
         init(null);
@@ -277,6 +279,9 @@ public class ExpandableFab extends FrameLayout {
     }
 
     public void slideOutFab() {
+        if (mIsSlidOut) {
+            return;
+        }
         if (mFabExpanded) {
             collapseFab(true);
             mFabExpanded = false;
@@ -291,6 +296,7 @@ public class ExpandableFab extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                mIsSlidOut = true;
                 mFab.setVisibility(View.GONE);
             }
 
@@ -303,6 +309,9 @@ public class ExpandableFab extends FrameLayout {
     }
 
     public void slideInFab() {
+        if (!mIsSlidOut) {
+            return;
+        }
         Animation slide_in = AnimationUtils.loadAnimation(getContext(), R.anim.fab_slide_in);
         slide_in.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -312,7 +321,7 @@ public class ExpandableFab extends FrameLayout {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
+                mIsSlidOut = false;
             }
 
             @Override
