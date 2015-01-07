@@ -117,6 +117,9 @@
     <string name="game_company">By:</string>
     <string name="trailer_release_date">Release Date:</string>
 
+    <!-- TrailerSearchResultsActivity Strings -->
+    <string name="trailer_search_results_title">Showing results for %s</string>
+
     <!-- PullToRefreshLayout Colors Array -->
     <integer-array name="pull_to_refresh_colors">
         <item>@color/theme_red</item>

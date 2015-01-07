@@ -5,6 +5,9 @@ import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminderSession;
 import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.data.model.YoutubeGameResponse;
+import com.gf.movie.reminder.data.model.YoutubeMovieResponse;
+import com.gf.movie.reminder.data.model.YoutubeTrailerResponse;
 
 import org.apache.http.HttpStatus;
 
@@ -43,21 +46,27 @@ public class MockRequestService implements RequestService {
     }
 
     @Override
-    public void search(@Query("key") String apiKey, @Query("part") final String query, final Callback<ArrayList<Trailer>> cb) {
+    public void search(@Query("key") String apiKey, @Query("part") final String query, final Callback<YoutubeTrailerResponse> cb) {
         ArrayList<Trailer> trailers = new ArrayList<Trailer>();
         trailers.addAll(getMockMovies());
         trailers.addAll(getMockGames());
-        cb.success(performSearch(query, trailers), getMock200Response());
+        YoutubeTrailerResponse response = new YoutubeTrailerResponse();
+        response.setTrailers(performSearch(query, trailers));
+        cb.success(response, getMock200Response());
     }
 
     @Override
-    public void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb) {
-        cb.success(getMockMovies(), getMock200Response());
+    public void getMovieTrailers(@Query("key") String apiKey, Callback<YoutubeMovieResponse> cb) {
+        YoutubeMovieResponse response = new YoutubeMovieResponse();
+        response.setTrailers(getMockMovies());
+        cb.success(response, getMock200Response());
     }
 
     @Override
-    public void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb) {
-        cb.success(getMockGames(), getMock200Response());
+    public void getGameTrailers(@Query("key") String apiKey, Callback<YoutubeGameResponse> cb) {
+        YoutubeGameResponse response = new YoutubeGameResponse();
+        response.setTrailers(getMockGames());
+        cb.success(response, getMock200Response());
     }
 
     private ArrayList<Trailer> performSearch(String query, ArrayList<Trailer> trailers) {

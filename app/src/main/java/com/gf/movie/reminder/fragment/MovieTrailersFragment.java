@@ -12,6 +12,7 @@ import com.gf.movie.reminder.activity.MovieTrailerActivity;
 import com.gf.movie.reminder.adapter.TrailersGridAdapter;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.data.model.YoutubeMovieResponse;
 import com.gf.movie.reminder.fragment.base.BaseTrailersFragment;
 import com.gf.movie.reminder.util.Utils;
 import com.gf.movie.reminder.view.FeedbackBar;
@@ -22,7 +23,7 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class MovieTrailersFragment extends BaseTrailersFragment implements Callback<ArrayList<Movie>> {
+public class MovieTrailersFragment extends BaseTrailersFragment implements Callback<YoutubeMovieResponse> {
 
     public static final String TAG = "movie_trailers";
 
@@ -55,13 +56,13 @@ public class MovieTrailersFragment extends BaseTrailersFragment implements Callb
     }
 
     @Override
-    public void success(ArrayList<Movie> movies, Response response) {
+    public void success(YoutubeMovieResponse youtubeResponse, Response response) {
         mPullToRefreshLayout.setRefreshing(false);
         if (mAdapter == null) {
-            mAdapter = new TrailersGridAdapter(getActivity(), movies, mPicasso);
+            mAdapter = new TrailersGridAdapter(getActivity(), youtubeResponse.getTrailers(), mPicasso);
             mGrid.setAdapter(mAdapter);
         } else {
-            mAdapter.setTrailers(movies);
+            mAdapter.setTrailers(youtubeResponse.getTrailers());
         }
     }
 
@@ -119,5 +120,10 @@ public class MovieTrailersFragment extends BaseTrailersFragment implements Callb
         super.didSelectTrailerForReminder(trailer);
         getFeedbackBar().showInfo(R.string.trailers_movie_reminder_set, false, FeedbackBar.LENGTH_LONG);
         mNotificationManager.registerNewMovieNotification(getActivity().getApplicationContext(), (Movie) trailer);
+    }
+
+    @Override
+    protected void setFragmentTitle() {
+        getActivity().setTitle(R.string.movie_trailers);
     }
 }

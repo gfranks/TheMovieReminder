@@ -21,8 +21,11 @@ public class Game extends Trailer {
             return new Game[size];
         }
     };
-    private Console mConsole;
+    private Console mConsole = Console.NONE;
     private String mCompany;
+
+    public Game() {
+    }
 
     public Game(Parcel in) {
         readFromParcel(in);
@@ -154,6 +157,7 @@ public class Game extends Trailer {
         PLAYSTATION_PC,
         STEAM,
         PC,
-        ALL
+        ALL,
+        NONE
     }
 }

@@ -26,7 +26,6 @@ public class MovieTrailerTopDragFragment extends BaseTrailerTopDragFragment impl
     Picasso mPicasso;
 
     private View mMoviePlay;
-    private ImageView mMovieImage;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,7 +37,7 @@ public class MovieTrailerTopDragFragment extends BaseTrailerTopDragFragment impl
         super.onViewCreated(view, savedInstanceState);
 
         mMoviePlay = view.findViewById(R.id.movie_play);
-        mMovieImage = (ImageView) view.findViewById(R.id.movie_image_url);
+        mTrailerImage = (ImageView) view.findViewById(R.id.movie_image_url);
 
         mMoviePlay.setOnClickListener(this);
     }
@@ -63,12 +62,9 @@ public class MovieTrailerTopDragFragment extends BaseTrailerTopDragFragment impl
         }
     }
 
-    private void update() {
-        mPicasso.load(mTrailer.getImageUrl())
-//                .centerCrop()
-                .placeholder(R.drawable.img_photo_loading_small)
-                .error(R.drawable.img_failed_to_receive_small)
-                .into(mMovieImage);
+    @Override
+    protected void update() {
+        super.update();
 
         TextView releasedTV = (TextView) getView().findViewById(R.id.trailer_released);
         if (mTrailer.isReleased()) {

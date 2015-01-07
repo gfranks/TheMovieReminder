@@ -56,8 +56,8 @@ public class TrailersGridAdapter extends GridSelectionAdapter {
         TextView tv3 = (TextView) convertView.findViewById(R.id.trailer_released);
 
         mPicasso.load(trailer.getImageUrl())
-                .resize(200, 250)
-//                .centerCrop()
+                .resize(250, 350)
+                .centerCrop()
                 .placeholder(R.drawable.img_photo_loading_small)
                 .error(R.drawable.img_failed_to_receive_small)
                 .into(iv);
@@ -124,6 +124,9 @@ public class TrailersGridAdapter extends GridSelectionAdapter {
                 break;
             case ALL:
                 setConsoleVisibilities(view, true, true, true, true);
+                break;
+            case NONE:
+                setConsoleVisibilities(view, false, false, false, false);
                 break;
         }
     }

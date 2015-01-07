@@ -21,8 +21,11 @@ public class Movie extends Trailer {
             return new Movie[size];
         }
     };
-    private String mDirectors;
-    private String mStars;
+    private String mDirectors = "N/A";
+    private String mStars = "N/A";
+
+    public Movie() {
+    }
 
     public Movie(Parcel in) {
         readFromParcel(in);

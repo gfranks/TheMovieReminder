@@ -102,4 +102,9 @@ public class MovieRemindersFragment extends BaseRemindersFragment {
             startActivity(intent);
         }
     }
+
+    @Override
+    protected void setFragmentTitle() {
+        getActivity().setTitle(R.string.movie_reminders);
+    }
 }

@@ -175,7 +175,7 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     @Override
     public void onMinimized() {
         mActionMode.finish();
-        getActivity().setTitle(getString(R.string.app_name));
+        setFragmentTitle();
         getExpandableFab().slideOutFab();
         initializeMenu();
     }
@@ -183,7 +183,7 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     @Override
     public void onClosedToLeft() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setFragmentTitle();
         getExpandableFab().slideInFab();
         initializeMenu();
         finishActionMode();
@@ -192,7 +192,7 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     @Override
     public void onClosedToRight() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setFragmentTitle();
         getExpandableFab().slideInFab();
         initializeMenu();
     }
@@ -242,4 +242,6 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     }
 
     protected abstract void startTrailerActivity(Trailer trailer);
+
+    protected abstract void setFragmentTitle();
 }
