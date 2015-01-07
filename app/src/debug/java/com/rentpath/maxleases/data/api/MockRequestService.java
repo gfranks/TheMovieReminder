@@ -4,6 +4,7 @@ import com.gf.movie.reminder.data.api.RequestService;
 import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminderSession;
+import com.gf.movie.reminder.data.model.Trailer;
 
 import org.apache.http.HttpStatus;
 
@@ -17,7 +18,7 @@ import javax.inject.Singleton;
 import retrofit.Callback;
 import retrofit.client.Response;
 import retrofit.http.Body;
-import retrofit.http.Path;
+import retrofit.http.Query;
 
 @Singleton
 public class MockRequestService implements RequestService {
@@ -40,7 +41,13 @@ public class MockRequestService implements RequestService {
         cb.success(session, getMock200Response());
     }
 
-    public void getMovieTrailers(@Path("apiKey") String apiKey, Callback<ArrayList<Movie>> cb) {
+    @Override
+    public void search(@Query("part") String query, Callback<ArrayList<Trailer>> cb) {
+
+    }
+
+    @Override
+    public void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb) {
         ArrayList<Movie> movies = new ArrayList<Movie>();
         movies.add(new Movie("The Interview",
                 "Dave Skylark (James Franco) and his producer Aaron " +
@@ -98,7 +105,7 @@ public class MockRequestService implements RequestService {
     }
 
     @Override
-    public void getGameTrailers(@Path("apiKey") String apiKey, Callback<ArrayList<Game>> cb) {
+    public void getGameTrailers(@Query("key") String apiKey, Callback<ArrayList<Game>> cb) {
         ArrayList<Game> games = new ArrayList<Game>();
         games.add(new Game("Grand Theft Auto V",
                 "Rockstar Games' critically acclaimed open world comes to a new generation \n\nEnter the lives of three " +

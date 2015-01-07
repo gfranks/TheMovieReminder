@@ -1,139 +1,149 @@
-package com.gf.movie.reminder.fragment.base;
+package com.gf.movie.reminder.activity;
 
+import android.app.ActivityOptions;
 import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.SearchView;
 import android.view.ActionMode;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.gf.movie.reminder.R;
-import com.gf.movie.reminder.activity.TrailerSearchResultsActivity;
+import com.gf.movie.reminder.activity.base.BaseActivity;
 import com.gf.movie.reminder.adapter.TrailersGridAdapter;
 import com.gf.movie.reminder.data.api.RequestService;
+import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.Trailer;
+import com.gf.movie.reminder.fragment.MovieTrailerBottomDragFragment;
+import com.gf.movie.reminder.fragment.MovieTrailerTopDragFragment;
+import com.gf.movie.reminder.fragment.base.BaseTrailerBottomDragFragment;
+import com.gf.movie.reminder.fragment.base.BaseTrailerTopDragFragment;
 import com.gf.movie.reminder.util.NotificationManager;
 import com.gf.movie.reminder.util.Utils;
+import com.gf.movie.reminder.view.FeedbackBar;
 import com.gf.movie.reminder.view.pulltorefresh.PullToRefreshLayout;
 import com.github.pedrovgs.DraggableListener;
 import com.github.pedrovgs.DraggablePanel;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
-public abstract class BaseTrailersFragment extends BaseFragment implements AdapterView.OnItemClickListener,
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+public class TrailerSearchResultsActivity extends BaseActivity implements Callback<ArrayList<Trailer>>, AdapterView.OnItemClickListener,
         AbsListView.MultiChoiceModeListener, PullToRefreshLayout.OnRefreshListener, DraggableListener {
 
     @Inject
-    protected RequestService mRequestService;
+    RequestService mRequestService;
 
     @Inject
-    protected Picasso mPicasso;
+    Picasso mPicasso;
 
     @Inject
-    protected NotificationManager mNotificationManager;
+    NotificationManager mNotificationManager;
 
     @Inject
-    protected SharedPreferences mPrefs;
+    SharedPreferences mPrefs;
 
-    protected GridView mGrid;
-    protected PullToRefreshLayout mPullToRefreshLayout;
-    protected TrailersGridAdapter mAdapter;
-    protected DraggablePanel mDraggablePanel;
-    protected ActionMode mActionMode;
+    private String mSearchQuery;
+    private GridView mGrid;
+    private PullToRefreshLayout mPullToRefreshLayout;
+    private TrailersGridAdapter mAdapter;
+    private DraggablePanel mDraggablePanel;
+    private ActionMode mActionMode;
 
-    protected boolean mIsSelectingNewReminder;
+    private boolean mIsSelectingNewReminder;
 
-    protected BaseTrailerTopDragFragment mTopFragment;
-    protected BaseTrailerBottomDragFragment mBottomFragment;
-    protected ActionMode.Callback mDraggableActionModeCallback = getDraggableActionModeCallback();
+    private BaseTrailerTopDragFragment mTopFragment;
+    private BaseTrailerBottomDragFragment mBottomFragment;
+    private ActionMode.Callback mDraggableActionModeCallback = getDraggableActionModeCallback();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+        setContentView(R.layout.activity_trailer_search_results);
+        handleIntent(getIntent());
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_trailers, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        mGrid = (GridView) view.findViewById(R.id.trailers_grid);
+        mGrid = (GridView) findViewById(R.id.results_grid);
         mGrid.setOnItemClickListener(this);
         mGrid.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
         mGrid.setMultiChoiceModeListener(this);
-        TextView emptyView = (TextView) view.findViewById(R.id.adapter_empty_text);
-        emptyView.setText(getString(R.string.trailers_empty_text));
+        TextView emptyView = (TextView) findViewById(R.id.adapter_empty_text);
+        emptyView.setText(getString(R.string.trailers_search_empty_text));
         mGrid.setEmptyView(emptyView);
 
-        mPullToRefreshLayout = (PullToRefreshLayout) view.findViewById(R.id.trailers_pull_to_refresh);
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.results_pull_to_refresh);
         mPullToRefreshLayout.setOnRefreshListener(this);
 
-        mDraggablePanel = (DraggablePanel) view.findViewById(R.id.trailer_draggable_panel);
+        mTopFragment = new MovieTrailerTopDragFragment();
+        Bundle args = new Bundle();
+        args.putBoolean(MovieTrailerTopDragFragment.EXTRA_IS_PANEL, true);
+        mTopFragment.setArguments(args);
+        mBottomFragment = new MovieTrailerBottomDragFragment();
+        mDraggablePanel = (DraggablePanel) findViewById(R.id.results_draggable_panel);
         mDraggablePanel.setDraggableListener(this);
-        mDraggablePanel.setFragmentManager(getChildFragmentManager());
+        mDraggablePanel.setFragmentManager(getSupportFragmentManager());
         mDraggablePanel.setTopFragment(mTopFragment);
         mDraggablePanel.setBottomFragment(mBottomFragment);
         mDraggablePanel.initializeView();
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_trailers, menu);
+    protected void onNewIntent(Intent intent) {
+        handleIntent(intent);
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(
-                new ComponentName(getActivity(), TrailerSearchResultsActivity.class)));
+    public void success(ArrayList<Trailer> trailers, Response response) {
+        mPullToRefreshLayout.setRefreshing(false);
+        if (mAdapter == null) {
+            mAdapter = new TrailersGridAdapter(this, trailers, mPicasso);
+            mGrid.setAdapter(mAdapter);
+        } else {
+            mAdapter.setTrailers(trailers);
+        }
     }
 
     @Override
-    public void onRefresh() {
+    public void failure(RetrofitError error) {
+        mPullToRefreshLayout.setRefreshing(false);
+        getFeedbackBar().showError(error.getMessage(), false, FeedbackBar.LENGTH_LONG);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (!mIsSelectingNewReminder) {
             if (Utils.isTrailerPanelEnabled(mPrefs)) {
-                getActivity().setTitle(mAdapter.getItem(position).getTitle());
+                setTitle(mAdapter.getItem(position).getTitle());
                 mTopFragment.updateWithTrailer(mAdapter.getItem(position));
                 mBottomFragment.updateWithTrailer(mAdapter.getItem(position));
                 mDraggablePanel.setVisibility(View.VISIBLE);
                 mDraggablePanel.maximize();
             } else {
-                startTrailerActivity(mAdapter.getItem(position));
+                Intent intent = new Intent(this, MovieTrailerActivity.class);
+                intent.putExtra(MovieTrailerActivity.EXTRA_TRAILER, mAdapter.getItem(position));
+                if (Utils.isAtLeastLollipop() && Utils.isTransitionAnimationEnabled(mPrefs)) {
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(this, findViewById(R.id.trailer_image_url), getString(R.string.trailer_transition_name));
+                    startActivity(intent, options.toBundle());
+                } else {
+                    startActivity(intent);
+                }
             }
         } else {
-            didSelectTrailerForReminder(mAdapter.getItem(position));
+            mIsSelectingNewReminder = false;
+            getFeedbackBar().showInfo(R.string.trailers_movie_reminder_set, false, FeedbackBar.LENGTH_LONG);
+            mNotificationManager.registerNewMovieNotification(getApplicationContext(), (Movie) mAdapter.getItem(position));
         }
-    }
-
-    @Override
-    public void onFabClick() {
-        mIsSelectingNewReminder = !mIsSelectingNewReminder;
     }
 
     @Override
@@ -175,7 +185,7 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     @Override
     public void onMinimized() {
         mActionMode.finish();
-        getActivity().setTitle(getString(R.string.app_name));
+        setTitle(getString(R.string.app_name));
         getExpandableFab().slideOutFab();
         initializeMenu();
     }
@@ -183,7 +193,7 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     @Override
     public void onClosedToLeft() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setTitle(getString(R.string.app_name));
         getExpandableFab().slideInFab();
         initializeMenu();
         finishActionMode();
@@ -192,9 +202,28 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     @Override
     public void onClosedToRight() {
         finishActionMode();
-        getActivity().setTitle(getString(R.string.app_name));
+        setTitle(getString(R.string.app_name));
         getExpandableFab().slideInFab();
         initializeMenu();
+    }
+
+    @Override
+    public void onRefresh() {
+        mRequestService.search(mSearchQuery, this);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            mSearchQuery = intent.getStringExtra(SearchManager.QUERY);
+            onRefresh();
+        }
+    }
+
+    protected void finishActionMode() {
+        if (mActionMode != null) {
+            mActionMode.finish();
+            mActionMode = null;
+        }
     }
 
     private ActionMode.Callback getDraggableActionModeCallback() {
@@ -228,18 +257,4 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
             }
         };
     }
-
-    protected void finishActionMode() {
-        if (mActionMode != null) {
-            mActionMode.finish();
-            mActionMode = null;
-        }
-    }
-
-    protected void didSelectTrailerForReminder(Trailer trailer) {
-        mIsSelectingNewReminder = false;
-        getExpandableFab().collapseFab(true);
-    }
-
-    protected abstract void startTrailerActivity(Trailer trailer);
 }

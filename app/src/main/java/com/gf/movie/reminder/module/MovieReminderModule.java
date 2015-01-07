@@ -6,6 +6,7 @@ import com.gf.movie.reminder.activity.GameTrailerActivity;
 import com.gf.movie.reminder.activity.LogInActivity;
 import com.gf.movie.reminder.activity.MovieReminderActivity;
 import com.gf.movie.reminder.activity.MovieTrailerActivity;
+import com.gf.movie.reminder.activity.TrailerSearchResultsActivity;
 import com.gf.movie.reminder.activity.base.BaseActivity;
 import com.gf.movie.reminder.activity.base.BaseTrailerActivity;
 import com.gf.movie.reminder.application.MovieReminderApplication;
@@ -31,6 +32,7 @@ import dagger.Provides;
                 BaseTrailerActivity.class,
                 MovieTrailerActivity.class,
                 GameTrailerActivity.class,
+                TrailerSearchResultsActivity.class,
                 LogInActivity.class
         },
         library = true,

@@ -3,6 +3,7 @@ package com.gf.movie.reminder.data.api;
 import com.gf.movie.reminder.data.model.Game;
 import com.gf.movie.reminder.data.model.Movie;
 import com.gf.movie.reminder.data.model.MovieReminderSession;
+import com.gf.movie.reminder.data.model.Trailer;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +23,9 @@ public interface RequestService {
     @POST("/register")
     void register(@Body HashMap creds,
                   Callback<MovieReminderSession> cb);
+
+    @GET("/search?part=snippet&type=video&videoCaption=closedCaption")
+    void search(@Query("q") String query, Callback<ArrayList<Trailer>> cb);
 
     @GET("/search?part=snippet&q=trailers&type=video&videoCaption=closedCaption")
     void getMovieTrailers(@Query("key") String apiKey, Callback<ArrayList<Movie>> cb);

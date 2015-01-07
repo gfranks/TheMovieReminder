@@ -3,7 +3,7 @@
 
     <item android:state_pressed="true">
         <shape android:shape="oval">
-            <solid android:color="@color/theme_accent_dark" />
+            <solid android:color="@color/theme_red_dark" />
         </shape>
     </item>
 
@@ -16,7 +16,7 @@
             </item>
             <item android:bottom="2dp" android:left="1dp" android:right="1dp">
                 <shape android:shape="oval">
-                    <solid android:color="@color/theme_accent" />
+                    <solid android:color="@color/theme_red" />
                 </shape>
             </item>
         </layer-list>
