@@ -42,8 +42,6 @@ public class MovieTrailersFragment extends BaseTrailersFragment implements Callb
     public void onResume() {
         super.onResume();
         getActivity().setTitle(R.string.movie_trailers);
-
-        mRequestService.getMovieTrailers(getString(R.string.google_api_key), this);
     }
 
     @Override

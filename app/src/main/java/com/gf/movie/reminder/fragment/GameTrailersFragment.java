@@ -46,8 +46,6 @@ public class GameTrailersFragment extends BaseTrailersFragment implements Callba
     public void onResume() {
         super.onResume();
         getActivity().setTitle(R.string.game_trailers);
-
-        mRequestService.getGameTrailers(getString(R.string.google_api_key), this);
     }
 
     @Override
