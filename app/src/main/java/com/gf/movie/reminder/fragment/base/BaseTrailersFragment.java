@@ -95,6 +95,13 @@ public abstract class BaseTrailersFragment extends BaseFragment implements Adapt
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        onRefresh();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_trailers, menu);
